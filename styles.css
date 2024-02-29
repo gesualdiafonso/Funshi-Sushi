@@ -1,0 +1,20 @@
+body{
+    font-size: 16px;
+    color: brown;
+    background-color: #a79986;
+    font-family: 'Times New Roman', Times, serif;
+}
+ /** Cabeçalho - Header **/
+ #header-nav{
+    background-color: #4b011d;
+    border-radius: 0;
+    border: 0;
+ }
+
+ /** Logo tipo**/
+#logo-imag{
+    background: url('../Fenshu Sushi/#logo-imag') no-repeat;
+    width: 150px;
+    height: 150px;
+    margin: 10px 15px 10px 0px; /* Espaço entre a imagem e o texto */
+}
