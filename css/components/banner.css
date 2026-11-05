@@ -1,0 +1,57 @@
+/* ==========================================================================
+   Banner — page-level notices (demo menu, storage notice, startup failure,
+   no-JS fallback). Not a toast: it stays until the situation changes.
+   <div class="banner" role="status"><svg class="icon">…</svg><p>…</p></div>
+   ========================================================================== */
+
+@layer components {
+  .banner {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    /* Content lines up with .container at every width. */
+    padding-block: var(--space-3);
+    padding-inline: max(var(--gutter), calc((100% - var(--container-max)) / 2));
+    background-color: var(--color-shari-deep);
+    color: var(--color-urushi);
+    font-size: var(--text-small);
+    line-height: 1.5;
+  }
+
+  .banner .icon {
+    margin-block-start: 0.1rem;
+  }
+
+  .banner a {
+    color: var(--color-akami);
+  }
+}
+
+/* ==========================================================================
+   Notice — an in-page note inside the content (sample menu, missing dish).
+   Unlike .banner it sits in the content column, at reading width.
+   ========================================================================== */
+
+@layer components {
+  .notice {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    max-width: var(--measure);
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-cut);
+    background-color: var(--surface-inset);
+    color: var(--text);
+    font-size: var(--text-small);
+    line-height: 1.5;
+  }
+
+  .notice .icon {
+    margin-block-start: 0.1rem;
+    color: var(--heading);
+  }
+
+  .notice__title {
+    font-weight: 700;
+  }
+}

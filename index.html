@@ -1,24 +1,342 @@
-<!DOCTYPE html>
+<!doctype html>
+<!-- lang: working language until {{SITE_LANGUAGE}} is confirmed (PRODUCT_BRIEF §11) -->
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible"  content="ie=edge">
-    <title>Suriname Sushi</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <header>
-        <nav id="header-nav" class="nav-bardefault">
-            <div class="container">
-                <div class="nav-barheader">
-                    <a href="index.html" class="">
-                        <div id="logo-imag" alt="logo-imag"></div>
-                    </a>
-                </div>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <title>Funshi Sushi</title>
+  <meta name="description" content="Funshi Sushi, Japanese restaurant: see the menu, order by WhatsApp for delivery or pickup, and find our location and opening hours.">
+  <meta name="theme-color" content="#240910">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
 
+  <link rel="preload" href="assets/fonts/zen-kaku-gothic-new-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/shippori-mincho-b1-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components/button.css">
+  <link rel="stylesheet" href="css/components/badge.css">
+  <link rel="stylesheet" href="css/components/banner.css">
+  <link rel="stylesheet" href="css/components/header.css">
+  <link rel="stylesheet" href="css/components/footer.css">
+  <link rel="stylesheet" href="css/components/card.css">
+  <link rel="stylesheet" href="css/components/hero.css">
+  <link rel="stylesheet" href="css/components/story.css">
+  <link rel="stylesheet" href="css/components/featured.css">
+  <link rel="stylesheet" href="css/components/benefits.css">
+  <link rel="stylesheet" href="css/components/cta.css">
+  <link rel="stylesheet" href="css/components/visit.css">
+  <link rel="stylesheet" href="css/utilities.css">
+
+  <link rel="modulepreload" href="js/app.js">
+  <link rel="modulepreload" href="js/config.js">
+  <link rel="modulepreload" href="js/strings.js">
+  <link rel="modulepreload" href="js/core/features.js">
+  <link rel="modulepreload" href="js/ui/dom.js">
+  <link rel="modulepreload" href="js/ui/overlay.js">
+  <link rel="modulepreload" href="js/ui/header.js">
+  <link rel="modulepreload" href="js/data/menu.js">
+  <link rel="modulepreload" href="js/core/catalog.js">
+  <link rel="modulepreload" href="js/core/money.js">
+  <link rel="modulepreload" href="js/core/hours.js">
+  <link rel="modulepreload" href="js/ui/business-info.js">
+  <link rel="modulepreload" href="js/ui/hours-view.js">
+  <link rel="modulepreload" href="js/ui/featured.js">
+  <link rel="modulepreload" href="js/ui/picture.js">
+  <link rel="modulepreload" href="js/ui/product-info.js">
+  <script type="module" src="js/pages/home.js"></script>
+</head>
+<body class="page surface-light">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <aside class="banner" aria-label="Preview notice" data-preview-notice>
+    <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#info"></use></svg>
+    <p>Preview: dishes, prices, the restaurant’s story and its contact details are placeholders until the restaurant confirms them.</p>
+  </aside>
+
+  <aside class="banner" aria-label="Error" data-app-error hidden>
+    <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#circle-alert"></use></svg>
+    <p data-field="message" role="alert"></p>
+  </aside>
+
+  <!-- shared:header:start — keep identical on every page except aria-current -->
+  <header class="site-header site-header--overlay surface-dark" data-header>
+    <div class="site-header__inner container">
+      <a class="wordmark" href="index.html" aria-label="Funshi Sushi, home">
+        <span class="wordmark__name" aria-hidden="true">Funshi</span>
+        <span class="wordmark__sub" aria-hidden="true">Sushi</span>
+      </a>
+      <nav class="site-nav" id="site-nav" aria-label="Main" data-nav>
+        <ul class="site-nav__list" role="list">
+          <li><a class="site-nav__link" href="menu.html">Menu</a></li>
+          <li><a class="site-nav__link" href="index.html#story">Our story</a></li>
+          <li><a class="site-nav__link" href="index.html#visit">Visit us</a></li>
+        </ul>
+        <div class="site-nav__extra">
+          <p class="text-muted" data-business="address-inline"><span class="placeholder">Address to be confirmed</span></p>
+          <a class="button button--secondary" href="index.html#visit"><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#map-pin"></use></svg>Location and hours</a>
+        </div>
+      </nav>
+      <div class="site-header__actions">
+        <!-- Cart button: enabled in the cart phase -->
+        <button class="button button--icon cart-button" type="button" data-cart-open aria-label="Cart, 0 items" hidden>
+          <svg class="icon icon--lg" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#shopping-bag"></use></svg>
+          <span class="badge badge--count" data-cart-count data-count="0">0</span>
+        </button>
+        <button class="button button--icon site-header__toggle" type="button" data-nav-toggle aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+          <svg class="icon icon--lg icon-open" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#menu"></use></svg>
+          <svg class="icon icon--lg icon-close" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#x"></use></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <!-- shared:header:end -->
+
+  <main id="main" tabindex="-1" data-inert-on-overlay>
+    <!-- ===== Hero =========================================================== -->
+    <section class="hero surface-dark" aria-labelledby="hero-title">
+      <div class="hero__inner container">
+        <div class="hero__text">
+          <h1 class="hero__title t-display" id="hero-title">Funshi <span class="hero__title-line">Sushi</span></h1>
+          <p class="hero__lead t-lead">Sushi made with care, ordered in a few taps.</p>
+          <div class="hero__actions cluster">
+            <a class="button button--primary button--large" href="menu.html">See the menu</a>
+            <a class="button button--secondary button--large" href="#visit">Location and hours</a>
+          </div>
+          <p class="hero__status" data-hours-status hidden></p>
+        </div>
+        <figure class="hero__media">
+          <picture>
+            <source type="image/avif" media="(min-width: 64rem)" srcset="assets/images/hero/hero-landscape-640.avif 640w, assets/images/hero/hero-landscape-960.avif 960w, assets/images/hero/hero-landscape-1280.avif 1280w, assets/images/hero/hero-landscape-1600.avif 1600w" sizes="55vw" width="1600" height="1280">
+            <source type="image/webp" media="(min-width: 64rem)" srcset="assets/images/hero/hero-landscape-640.webp 640w, assets/images/hero/hero-landscape-960.webp 960w, assets/images/hero/hero-landscape-1280.webp 1280w, assets/images/hero/hero-landscape-1600.webp 1600w" sizes="55vw" width="1600" height="1280">
+            <source media="(min-width: 64rem)" srcset="assets/images/hero/hero-landscape-640.jpg 640w, assets/images/hero/hero-landscape-960.jpg 960w, assets/images/hero/hero-landscape-1280.jpg 1280w, assets/images/hero/hero-landscape-1600.jpg 1600w" sizes="55vw" width="1600" height="1280">
+            <source type="image/avif" srcset="assets/images/hero/hero-portrait-480.avif 480w, assets/images/hero/hero-portrait-800.avif 800w, assets/images/hero/hero-portrait-1200.avif 1200w, assets/images/hero/hero-portrait-1600.avif 1600w" sizes="100vw" width="1600" height="2000">
+            <source type="image/webp" srcset="assets/images/hero/hero-portrait-480.webp 480w, assets/images/hero/hero-portrait-800.webp 800w, assets/images/hero/hero-portrait-1200.webp 1200w, assets/images/hero/hero-portrait-1600.webp 1600w" sizes="100vw" width="1600" height="2000">
+            <img class="hero__image" src="assets/images/hero/hero-portrait-800.jpg" srcset="assets/images/hero/hero-portrait-480.jpg 480w, assets/images/hero/hero-portrait-800.jpg 800w, assets/images/hero/hero-portrait-1200.jpg 1200w, assets/images/hero/hero-portrait-1600.jpg 1600w" sizes="100vw" width="1600" height="2000" alt="Illustration: three pieces of nigiri — salmon, tuna and white fish — with a dab of wasabi on a dark red lacquered tray." fetchpriority="high" decoding="async">
+          </picture>
+          <figcaption class="hero__caption t-caption">Illustration</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===== Introduction ===================================================== -->
+    <section class="intro section surface-light" aria-labelledby="intro-title">
+      <div class="container">
+        <div class="intro__grid">
+          <h2 class="intro__title" id="intro-title">Precise where it matters. Simple everywhere else.</h2>
+          <div class="intro__body stack stack--5">
+            <p class="t-lead">Funshi Sushi is a Japanese restaurant built around the sushi counter: a short menu, each piece prepared with attention, and an order that reaches the kitchen without fuss.</p>
+            <p>Browse the menu, choose your dishes, and send the order by WhatsApp. You’ll see every price before anything is sent.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== About ============================================================ -->
+    <section class="story section surface-light" id="story" aria-labelledby="story-title">
+      <div class="container">
+        <div class="story__grid">
+          <figure class="story__media">
+            <picture>
+              <source type="image/avif" srcset="assets/images/story/counter-640.avif 640w, assets/images/story/counter-1024.avif 1024w, assets/images/story/counter-1600.avif 1600w" sizes="(min-width: 64rem) 55vw, 100vw">
+              <source type="image/webp" srcset="assets/images/story/counter-640.webp 640w, assets/images/story/counter-1024.webp 1024w, assets/images/story/counter-1600.webp 1600w" sizes="(min-width: 64rem) 55vw, 100vw">
+              <img src="assets/images/story/counter-1024.jpg" srcset="assets/images/story/counter-640.jpg 640w, assets/images/story/counter-1024.jpg 1024w, assets/images/story/counter-1600.jpg 1600w" sizes="(min-width: 64rem) 55vw, 100vw" width="1600" height="1067" alt="Illustration: a tuna nigiri and a salmon nigiri side by side on a light hinoki wood board." loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="t-caption">Illustration</figcaption>
+          </figure>
+          <div class="story__text stack stack--5">
+            <h2 id="story-title">Our story</h2>
+            <div class="draft-slot">
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#info"></use></svg>
+              <div class="stack stack--2">
+                <p class="draft-slot__title">The restaurant’s story goes here</p>
+                <p>Who founded Funshi Sushi, who works the counter, and what makes the place theirs. This text will come from the restaurant; it is not written for them.</p>
+              </div>
             </div>
-        </nav>
-    </header>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Culinary philosophy ============================================== -->
+    <section class="philosophy section surface-dark" id="philosophy" aria-labelledby="philosophy-title">
+      <div class="container">
+        <div class="philosophy__head stack stack--3">
+          <h2 id="philosophy-title">How we work</h2>
+          <p class="text-muted">Four ideas behind every order.</p>
+        </div>
+        <ul class="philosophy__list" role="list">
+          <li class="philosophy__item">
+            <h3>The fish leads</h3>
+            <p>The menu follows what is good and in season, rather than the other way around.</p>
+          </li>
+          <li class="philosophy__item">
+            <h3>Rice is half the piece</h3>
+            <p>Seasoned, shaped by hand and served at the right temperature, because it carries the flavour as much as the fish does.</p>
+          </li>
+          <li class="philosophy__item">
+            <h3>A short menu, done well</h3>
+            <p>Fewer dishes, each one made the same careful way every time.</p>
+          </li>
+          <li class="philosophy__item">
+            <h3>Ordering without friction</h3>
+            <p>Clear prices, a few taps, and a real person at the restaurant confirming your order.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== Featured dishes ================================================== -->
+    <section class="featured section surface-light" id="featured" aria-labelledby="featured-title">
+      <div class="container">
+        <div class="section-head">
+          <div class="stack stack--3">
+            <h2 id="featured-title">From the counter</h2>
+            <p class="text-muted t-small" data-demo-note>Sample dishes and prices, not the restaurant’s menu.</p>
+          </div>
+          <a class="button button--tertiary" href="menu.html">See the full menu</a>
+        </div>
+        <ul class="featured__list scroller scroller--bleed" role="list" data-featured></ul>
+        <noscript>
+          <p><a class="button button--secondary" href="menu.html">See the full menu</a></p>
+        </noscript>
+      </div>
+    </section>
+
+    <!-- ===== Benefits ======================================================== -->
+    <section class="benefits section section--tight" aria-labelledby="benefits-title">
+      <div class="container">
+        <h2 id="benefits-title">Ordering, made simple</h2>
+        <ul class="benefits__list" role="list">
+          <li class="benefit">
+            <svg class="icon icon--lg" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#message-circle"></use></svg>
+            <h3 class="benefit__title">Order on WhatsApp</h3>
+            <p>Build your order here. It reaches the restaurant as one clear, complete message.</p>
+          </li>
+          <li class="benefit">
+            <svg class="icon icon--lg" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#receipt-text"></use></svg>
+            <h3 class="benefit__title">Prices up front</h3>
+            <p>See each price and the total, delivery included, before you send anything.</p>
+          </li>
+          <li class="benefit">
+            <svg class="icon icon--lg" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#bike"></use></svg>
+            <h3 class="benefit__title">Delivery or pickup</h3>
+            <p>Have it brought to your door or collect it at the restaurant.</p>
+          </li>
+          <li class="benefit">
+            <svg class="icon icon--lg" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#wallet"></use></svg>
+            <h3 class="benefit__title">Nothing charged online</h3>
+            <p>You pay when your order is delivered or picked up.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== Call to action =================================================== -->
+    <section class="cta section surface-dark" aria-labelledby="cta-title">
+      <div class="container">
+        <div class="cta__inner">
+          <div class="stack stack--3">
+            <h2 id="cta-title">Ready to order?</h2>
+            <p class="t-lead">Choose your dishes from the menu and send the order by WhatsApp. The restaurant replies to confirm it.</p>
+          </div>
+          <div class="cluster">
+            <a class="button button--primary button--large" href="menu.html">See the menu</a>
+            <a class="button button--secondary button--large" data-business-link="whatsapp" hidden>
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#message-circle"></use></svg>Message us on WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Location and contact ============================================= -->
+    <section class="visit section surface-light" id="visit" aria-labelledby="visit-title">
+      <div class="container">
+        <h2 id="visit-title">Visit us</h2>
+        <div class="visit__grid">
+          <div class="visit__block stack stack--3">
+            <h3 class="visit__heading"><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#map-pin"></use></svg>Address</h3>
+            <address class="visit__address" data-business="address"><span class="placeholder">Address to be confirmed</span></address>
+            <p><a class="button button--secondary" data-business-link="maps" hidden>Open in maps</a></p>
+          </div>
+          <div class="visit__block stack stack--3">
+            <h3 class="visit__heading"><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#clock"></use></svg>Opening hours</h3>
+            <p class="visit__status" data-hours-status hidden></p>
+            <div data-hours-table>
+              <p><span class="placeholder">Opening hours to be confirmed</span></p>
+            </div>
+          </div>
+          <div class="visit__block stack stack--3">
+            <h3 class="visit__heading"><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#phone"></use></svg>Contact</h3>
+            <p data-business="contact-placeholder"><span class="placeholder">WhatsApp and phone to be confirmed</span></p>
+            <div class="stack stack--2">
+              <p><a class="button button--primary" data-business-link="whatsapp" hidden><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#message-circle"></use></svg>Message us on WhatsApp</a></p>
+              <p><a class="visit__phone" data-business-link="phone" hidden></a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <template id="tpl-feature-card">
+      <li>
+        <article class="dish-card">
+          <div class="dish-card__inner">
+            <div class="dish-card__media" data-media></div>
+            <div class="dish-card__body">
+              <!-- Heading text is filled from js/data/menu.js by featured.js. -->
+              <!-- [html-validate-disable-next empty-heading] -->
+              <h3 class="dish-card__title" data-field="name"></h3>
+              <p class="dish-card__desc" data-field="description"></p>
+              <p class="dish-card__meta"><span data-field="pieces"></span></p>
+            </div>
+            <div class="dish-card__footer">
+              <p class="dish-card__price t-price" data-field="price"></p>
+              <a class="button button--secondary button--compact" data-field-link="menu">Details<span class="visually-hidden" data-field="link-name"></span></a>
+            </div>
+          </div>
+        </article>
+      </li>
+    </template>
+  </main>
+
+  <!-- shared:footer:start — keep identical on every page -->
+  <footer class="site-footer surface-dark" data-inert-on-overlay>
+    <div class="container">
+      <div class="site-footer__columns">
+        <div class="stack stack--3">
+          <a class="wordmark" href="index.html" aria-label="Funshi Sushi, home">
+            <span class="wordmark__name" aria-hidden="true">Funshi</span>
+            <span class="wordmark__sub" aria-hidden="true">Sushi</span>
+          </a>
+          <p class="text-muted"><span class="placeholder">Tagline to be confirmed</span></p>
+        </div>
+        <div>
+          <h2 class="site-footer__heading">Visit us</h2>
+          <div class="stack stack--2">
+            <p data-business="address-inline"><span class="placeholder">Address to be confirmed</span></p>
+            <p data-hours-summary><span class="placeholder">Opening hours to be confirmed</span></p>
+            <p><a href="index.html#visit">Location and hours</a></p>
+          </div>
+        </div>
+        <div>
+          <h2 class="site-footer__heading">Order</h2>
+          <ul class="site-footer__list" role="list">
+            <li><a href="menu.html"><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#chevron-right"></use></svg>See the menu</a></li>
+            <li data-business="whatsapp-item"><span class="placeholder">WhatsApp number to be confirmed</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="site-footer__legal">
+        <p>© 2026 Funshi Sushi</p>
+        <p>Icons by Lucide (ISC). Typefaces: Shippori Mincho B1 and Zen Kaku Gothic New (SIL OFL).</p>
+      </div>
+    </div>
+  </footer>
+  <!-- shared:footer:end -->
+
+  <div class="visually-hidden" aria-live="polite" data-announcer></div>
 </body>
 </html>

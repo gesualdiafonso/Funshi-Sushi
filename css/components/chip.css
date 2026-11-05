@@ -1,0 +1,52 @@
+/* ==========================================================================
+   Chip — pill-shaped toggle or navigation item (BRAND_GUIDELINES §10.1)
+   Toggle:     <button class="chip" type="button" aria-pressed="false">Cooked</button>
+   Navigation: <a class="chip" href="#nigiri" aria-current="true">Nigiri</a>
+   ========================================================================== */
+
+@layer components {
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--tap-target);
+    padding: var(--space-2) var(--space-4);
+    border: var(--border-width) solid var(--chip-border);
+    border-radius: var(--radius-pill);
+    background-color: var(--chip-bg);
+    color: var(--chip-fg);
+    font-size: var(--text-small);
+    font-weight: 500;
+    line-height: 1.2;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      background-color var(--dur-fast) var(--ease-out),
+      color var(--dur-fast) var(--ease-out);
+  }
+
+  .chip[aria-pressed="true"],
+  .chip[aria-current="true"],
+  .chip[aria-current="page"] {
+    border-color: var(--chip-selected-bg);
+    background-color: var(--chip-selected-bg);
+    color: var(--chip-selected-fg);
+  }
+
+  /* A check icon confirms selection without relying on color alone. */
+  .chip__check {
+    display: none;
+  }
+
+  .chip[aria-pressed="true"] .chip__check {
+    display: block;
+  }
+
+  @media (hover: hover) {
+    .chip:not([aria-pressed="true"], [aria-current="true"], [aria-current="page"]):hover {
+      border-color: var(--border-control);
+    }
+  }
+}

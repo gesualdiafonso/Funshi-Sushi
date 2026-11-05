@@ -1,0 +1,9 @@
+{
+  "name": "funshi-sushi",
+  "private": true,
+  "description": "Funshi Sushi restaurant website. Static, no build step. package.json only configures the dev-time tests; the site has no dependencies.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test \"tests/**/*.test.js\""
+  }
+}

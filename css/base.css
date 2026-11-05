@@ -1,0 +1,198 @@
+/* ==========================================================================
+   Base — element defaults and the typographic styles.
+   Element selectors set the defaults; the .t-* classes apply a named style
+   from BRAND_GUIDELINES §4.4 to any element (e.g. a <p> styled as a lead).
+   ========================================================================== */
+
+@layer base {
+  html {
+    background-color: var(--surface);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 100%;
+    line-height: var(--leading-body);
+    scroll-padding-top: calc(var(--header-height) + var(--space-4));
+    scrollbar-gutter: stable;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background-color: var(--surface);
+    color: var(--text);
+    font-size: var(--text-body);
+    font-weight: 400;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---- Headings ---------------------------------------------------------- */
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--heading);
+    text-wrap: balance;
+  }
+
+  h1 {
+    font-size: var(--text-h1);
+    line-height: var(--leading-tight);
+    letter-spacing: -0.01em;
+  }
+
+  h2 {
+    font-size: var(--text-h2);
+    line-height: 1.15;
+    letter-spacing: -0.005em;
+  }
+
+  h3 {
+    font-size: var(--text-h3);
+    line-height: 1.25;
+  }
+
+  h4 {
+    font-family: var(--font-body);
+    font-size: var(--text-h4);
+    font-weight: 700;
+    line-height: var(--leading-snug);
+    color: var(--text);
+  }
+
+  /* ---- Text ------------------------------------------------------------- */
+  p,
+  li,
+  dd {
+    max-width: var(--measure);
+    text-wrap: pretty;
+  }
+
+  strong,
+  b {
+    font-weight: 700;
+  }
+
+  small {
+    font-size: var(--text-small);
+  }
+
+  a {
+    color: var(--link);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+    transition: text-decoration-thickness var(--dur-fast) var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    a:hover {
+      text-decoration-thickness: 2px;
+    }
+  }
+
+  ::selection {
+    background-color: var(--color-akami);
+    color: var(--color-shari);
+  }
+
+  /* ---- Focus ------------------------------------------------------------ */
+  :focus {
+    outline: none;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 3px;
+  }
+
+  /* Programmatic focus targets (main, headings, error summary) don't need a ring. */
+  [tabindex="-1"]:focus-visible {
+    outline: none;
+  }
+
+  /* ---- Icons (Lucide sprite, see assets/icons/sprite.svg) ---------------- */
+  .icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .icon--sm {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .icon--lg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  /* ---- Named typographic styles (BRAND_GUIDELINES §4.4) ------------------ */
+  .t-display {
+    font-family: var(--font-display);
+    font-size: var(--text-display);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    color: var(--heading);
+  }
+
+  .t-lead {
+    font-size: var(--text-lead);
+    line-height: 1.55;
+    max-width: var(--measure-lead);
+  }
+
+  .t-small {
+    font-size: var(--text-small);
+    line-height: 1.5;
+    letter-spacing: 0.005em;
+  }
+
+  .t-caption {
+    font-size: var(--text-caption);
+    line-height: 1.45;
+    letter-spacing: 0.01em;
+    color: var(--text-muted);
+  }
+
+  .t-label {
+    font-size: var(--text-small);
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+  }
+
+  /* Prices: neither typeface has tabular figures (verified in Phase 05),
+     so price columns are aligned by layout (right edge), not by digits. */
+  .t-price {
+    font-weight: 500;
+    line-height: var(--leading-snug);
+    white-space: nowrap;
+    font-variant-numeric: lining-nums;
+  }
+}
+
+/* Reduced motion: every transition/animation becomes near-instant.
+   Outside any layer on purpose so it overrides component motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}

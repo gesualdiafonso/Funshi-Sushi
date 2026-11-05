@@ -1,0 +1,105 @@
+/* ==========================================================================
+   Introduction, Our story, Culinary philosophy, and the draft slot.
+   ========================================================================== */
+
+@layer components {
+  /* ---- Introduction: one editorial statement --------------------------- */
+  .intro__grid {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .intro__title {
+    max-width: 16ch;
+    font-size: var(--text-h1);
+    line-height: var(--leading-tight);
+  }
+
+  @media (min-width: 64rem) {
+    .intro__grid {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      gap: var(--space-8);
+      align-items: end;
+    }
+  }
+
+  /* ---- Our story ------------------------------------------------------- */
+  .story__grid {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .story__media {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .story__media img {
+    width: 100%;
+    border-radius: var(--radius-cut);
+  }
+
+  @media (min-width: 64rem) {
+    .story__grid {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      gap: var(--space-8);
+      align-items: center;
+    }
+  }
+
+  /* ---- Draft slot: content the restaurant must supply -------------------
+     Honest placeholder (PRODUCT_BRIEF §0): visible, designed, never fake. */
+  .draft-slot {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    max-width: var(--measure);
+    padding: var(--space-5);
+    border: var(--border-width) dashed var(--border-control);
+    border-radius: var(--radius-cut);
+    color: var(--text-muted);
+  }
+
+  .draft-slot .icon {
+    margin-block-start: 0.2rem;
+  }
+
+  .draft-slot__title {
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  /* ---- Culinary philosophy ---------------------------------------------- */
+  .philosophy__list {
+    display: grid;
+    gap: var(--space-6);
+    margin: 0;
+    padding: 0;
+  }
+
+  @media (min-width: 40rem) {
+    .philosophy__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .philosophy__list {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-6) var(--grid-gap);
+    }
+  }
+
+  .philosophy__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding-block-start: var(--space-4);
+    border-block-start: var(--border-width) solid var(--line);
+  }
+
+  .philosophy__item p {
+    color: var(--text-muted);
+  }
+}

@@ -1,0 +1,223 @@
+/* ==========================================================================
+   Layout — containers, surfaces, grid and reusable layout patterns.
+   Rules: layout only (no component looks). Parents own the gaps between
+   children; components carry no outer margin (BRAND_GUIDELINES §8.2).
+
+   Breakpoints (literal values — custom properties can't be used in @media):
+     sm 40rem (640px) · lg 64rem (1024px) · xl 90rem (1440px)
+   ========================================================================== */
+
+@layer layout {
+  @media (min-width: 64rem) {
+    :root {
+      --header-height: 4.5rem; /* 72px */
+    }
+  }
+
+  /* ---- Surfaces --------------------------------------------------------- */
+  .surface-light,
+  .surface-dark {
+    background-color: var(--surface);
+    color: var(--text);
+  }
+
+  /* ---- Container -------------------------------------------------------- */
+  .container {
+    width: 100%;
+    max-width: calc(var(--container-max) + 2 * var(--gutter));
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  /* ---- Section: vertical rhythm between page bands ---------------------- */
+  .section {
+    padding-block: var(--section-space);
+  }
+
+  .section--tight {
+    padding-block: var(--space-8);
+  }
+
+  .section > .container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--section-gap, var(--space-7));
+  }
+
+  /* ---- Stack: vertical flow with a consistent gap ----------------------- */
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--stack-gap, var(--space-4));
+  }
+
+  .stack--2 { --stack-gap: var(--space-2); }
+  .stack--3 { --stack-gap: var(--space-3); }
+  .stack--5 { --stack-gap: var(--space-5); }
+  .stack--6 { --stack-gap: var(--space-6); }
+  .stack--7 { --stack-gap: var(--space-7); }
+
+  /* ---- Cluster: horizontal group that wraps (buttons, chips, badges) ---- */
+  .cluster {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: var(--cluster-align, center);
+    gap: var(--cluster-gap, var(--space-3));
+  }
+
+  .cluster--between {
+    justify-content: space-between;
+  }
+
+  /* ---- Grid: 4 / 8 / 12 columns -----------------------------------------
+     Children span the full width by default. Span classes:
+       .span-N     (base, N of 4)
+       .span-sm-N  (≥ 40rem, N of 8)
+       .span-lg-N  (≥ 64rem, N of 12)
+     .start-lg-N offsets a child (for the editorial "grid break").
+     ---------------------------------------------------------------------- */
+  .grid {
+    --grid-cols: 4;
+    display: grid;
+    grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
+    gap: var(--grid-gap);
+  }
+
+  .grid > * {
+    grid-column: 1 / -1;
+  }
+
+  .grid > .span-1 { grid-column: span 1; }
+  .grid > .span-2 { grid-column: span 2; }
+  .grid > .span-3 { grid-column: span 3; }
+  .grid > .span-4 { grid-column: span 4; }
+
+  @media (min-width: 40rem) {
+    .grid { --grid-cols: 8; }
+    .grid > .span-sm-2 { grid-column: span 2; }
+    .grid > .span-sm-3 { grid-column: span 3; }
+    .grid > .span-sm-4 { grid-column: span 4; }
+    .grid > .span-sm-5 { grid-column: span 5; }
+    .grid > .span-sm-6 { grid-column: span 6; }
+    .grid > .span-sm-8 { grid-column: span 8; }
+  }
+
+  @media (min-width: 64rem) {
+    .grid { --grid-cols: 12; }
+    .grid > .span-lg-3 { grid-column: span 3; }
+    .grid > .span-lg-4 { grid-column: span 4; }
+    .grid > .span-lg-5 { grid-column: span 5; }
+    .grid > .span-lg-6 { grid-column: span 6; }
+    .grid > .span-lg-7 { grid-column: span 7; }
+    .grid > .span-lg-8 { grid-column: span 8; }
+    .grid > .span-lg-9 { grid-column: span 9; }
+    .grid > .span-lg-12 { grid-column: span 12; }
+    .grid > .start-lg-1 { grid-column-start: 1; }
+    .grid > .start-lg-6 { grid-column-start: 6; }
+    .grid > .start-lg-8 { grid-column-start: 8; }
+  }
+
+  /* ---- Auto grid: as many equal columns as fit (cards) ------------------ */
+  .auto-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(var(--auto-grid-min, 16rem), 100%), 1fr));
+    gap: var(--grid-gap);
+  }
+
+  /* ---- Split: asymmetric two-column (editorial 7/5) ----------------------
+     Stacks on small screens; side by side from 64rem. Add --reverse to put
+     the media column first visually (source order stays text-first).
+     ---------------------------------------------------------------------- */
+  .split {
+    display: grid;
+    gap: var(--space-6);
+    align-items: var(--split-align, start);
+  }
+
+  @media (min-width: 64rem) {
+    .split {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      gap: var(--space-8);
+    }
+
+    .split--reverse {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    }
+
+    .split--reverse > :first-child {
+      order: 2;
+    }
+  }
+
+  /* ---- Sidebar: sticky rail + main column (menu page) ------------------- */
+  .with-sidebar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr); /* lets wide children (scrolling rows) shrink */
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 64rem) {
+    .with-sidebar {
+      grid-template-columns: minmax(10rem, 3fr) minmax(0, 9fr);
+      gap: var(--grid-gap);
+      align-items: start;
+    }
+
+    .with-sidebar__rail {
+      position: sticky;
+      top: calc(var(--header-height) + var(--space-5));
+    }
+  }
+
+  /* ---- Scroller: horizontal scroll-snap row (featured, category chips) --- */
+  .scroller {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: var(--scroller-item, min(75%, 18rem));
+    gap: var(--space-4);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    padding-block-end: var(--space-2); /* room for focus rings */
+    scrollbar-width: thin;
+  }
+
+  .scroller > * {
+    scroll-snap-align: start;
+  }
+
+  /* Bleed a scroller to the screen edges while content aligns with the container. */
+  .scroller--bleed {
+    margin-inline: calc(-1 * var(--gutter));
+    padding-inline: var(--gutter);
+  }
+
+  /* ---- Prose: readable line length -------------------------------------- */
+  .measure {
+    max-width: var(--measure);
+  }
+
+  /* ---- Page shell: footer sits at the bottom on short pages ------------- */
+  .page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  .page > main {
+    flex: 1;
+  }
+}
+
+@layer layout {
+  /* ---- Section head: heading block + an aside link on one line ---------- */
+  .section-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-3) var(--space-6);
+  }
+}

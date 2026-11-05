@@ -1,0 +1,172 @@
+/* ==========================================================================
+   Button — BRAND_GUIDELINES §10
+   <button class="button button--primary" type="button">Add</button>
+   <a class="button button--secondary" href="menu.html">See the menu</a>
+
+   Variants: --primary · --secondary · --tertiary · --destructive · --icon
+   Sizes:    (default 48px) · --compact (40px, 44px hit area) · --large (56px)
+   Layout:   --block (full width)
+   States via attributes: [aria-disabled="true"] · [aria-busy="true"]
+                          [data-state="added"]
+   Colors come from role tokens, so the same markup is correct on
+   .surface-light and .surface-dark.
+   ========================================================================== */
+
+@layer components {
+  .button {
+    --button-height: 3rem;
+    --button-pad: var(--space-5);
+
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-height: var(--button-height);
+    padding: var(--space-2) var(--button-pad);
+    border: var(--border-width) solid transparent;
+    border-radius: var(--radius-control);
+    background-color: transparent;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    font-weight: 500;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      background-color var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out),
+      color var(--dur-fast) var(--ease-out),
+      translate var(--dur-fast) var(--ease-out);
+  }
+
+  .button:active:not([aria-disabled="true"]) {
+    translate: 0 1px;
+  }
+
+  /* ---- Variants --------------------------------------------------------- */
+  .button--primary {
+    background-color: var(--btn-primary-bg);
+    color: var(--btn-primary-fg);
+  }
+
+  .button--secondary {
+    border-color: var(--border-control);
+    color: var(--text);
+  }
+
+  .button--tertiary,
+  .button--destructive {
+    --button-pad: var(--space-1);
+    min-height: var(--tap-target);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  .button--tertiary {
+    color: var(--link);
+  }
+
+  .button--destructive {
+    color: var(--error);
+  }
+
+  .button--icon {
+    --button-pad: 0;
+    width: var(--tap-target);
+    min-height: var(--tap-target);
+    color: var(--text);
+  }
+
+  /* ---- Hover (pointer devices only) ------------------------------------- */
+  @media (hover: hover) {
+    .button--primary:hover:not([aria-disabled="true"]) {
+      background-color: var(--btn-primary-bg-hover);
+    }
+
+    .button--secondary:hover:not([aria-disabled="true"]),
+    .button--icon:hover:not([aria-disabled="true"]) {
+      background-color: var(--btn-tint);
+    }
+
+    .button--tertiary:hover,
+    .button--destructive:hover {
+      text-decoration-thickness: 2px;
+    }
+  }
+
+  /* ---- Sizes ------------------------------------------------------------ */
+  .button--compact {
+    --button-height: 2.5rem;
+    --button-pad: var(--space-4);
+    font-size: var(--text-small);
+  }
+
+  /* Keep a 44px touch target around the 40px visual height. */
+  .button--compact::after {
+    content: "";
+    position: absolute;
+    inset: -2px 0;
+  }
+
+  .button--large {
+    --button-height: 3.5rem;
+    --button-pad: var(--space-6);
+    font-weight: 700;
+  }
+
+  .button--block {
+    display: flex;
+    width: 100%;
+  }
+
+  /* ---- States ----------------------------------------------------------- */
+  /* aria-disabled keeps the button focusable so the reason next to it
+     can be discovered (BRAND_GUIDELINES §10.3). */
+  .button[aria-disabled="true"],
+  .button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .button[aria-busy="true"] {
+    cursor: progress;
+  }
+
+  .button[aria-busy="true"] .icon {
+    visibility: hidden;
+  }
+
+  .button[aria-busy="true"]::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: calc(var(--button-pad) + 0.125rem);
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid currentColor;
+    border-inline-end-color: transparent;
+    border-radius: 50%;
+    animation: button-spin 0.7s linear infinite;
+  }
+
+  .button[data-state="added"] {
+    background-color: var(--signal);
+    color: var(--color-shari);
+  }
+
+  .surface-dark .button[data-state="added"] {
+    color: var(--color-urushi);
+  }
+
+  @keyframes button-spin {
+    to {
+      rotate: 1turn;
+    }
+  }
+}

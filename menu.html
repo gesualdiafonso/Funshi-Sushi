@@ -1,0 +1,275 @@
+<!doctype html>
+<!-- lang: working language until {{SITE_LANGUAGE}} is confirmed (PRODUCT_BRIEF §11) -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <title>Menu · Funshi Sushi</title>
+  <meta name="description" content="The Funshi Sushi menu: nigiri, sashimi, uramaki, hot rolls, gunkan, combos, sides and drinks, with ingredients and allergens.">
+  <meta name="theme-color" content="#240910">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <link rel="preload" href="assets/fonts/zen-kaku-gothic-new-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/shippori-mincho-b1-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components/button.css">
+  <link rel="stylesheet" href="css/components/badge.css">
+  <link rel="stylesheet" href="css/components/banner.css">
+  <link rel="stylesheet" href="css/components/header.css">
+  <link rel="stylesheet" href="css/components/footer.css">
+  <link rel="stylesheet" href="css/components/chip.css">
+  <link rel="stylesheet" href="css/components/dialog.css">
+  <link rel="stylesheet" href="css/components/card.css">
+  <link rel="stylesheet" href="css/components/menu.css">
+  <link rel="stylesheet" href="css/components/product-dialog.css">
+  <link rel="stylesheet" href="css/utilities.css">
+
+  <link rel="modulepreload" href="js/app.js">
+  <link rel="modulepreload" href="js/config.js">
+  <link rel="modulepreload" href="js/strings.js">
+  <link rel="modulepreload" href="js/core/features.js">
+  <link rel="modulepreload" href="js/ui/dom.js">
+  <link rel="modulepreload" href="js/ui/overlay.js">
+  <link rel="modulepreload" href="js/ui/header.js">
+  <link rel="modulepreload" href="js/data/menu.js">
+  <link rel="modulepreload" href="js/core/catalog.js">
+  <link rel="modulepreload" href="js/core/money.js">
+  <link rel="modulepreload" href="js/core/hours.js">
+  <link rel="modulepreload" href="js/ui/business-info.js">
+  <link rel="modulepreload" href="js/ui/hours-view.js">
+  <link rel="modulepreload" href="js/core/menu-query.js">
+  <link rel="modulepreload" href="js/ui/announcer.js">
+  <link rel="modulepreload" href="js/ui/picture.js">
+  <link rel="modulepreload" href="js/ui/product-info.js">
+  <link rel="modulepreload" href="js/ui/menu-view.js">
+  <link rel="modulepreload" href="js/ui/menu-filters.js">
+  <link rel="modulepreload" href="js/ui/product-dialog.js">
+  <script type="module" src="js/pages/menu.js"></script>
+</head>
+<body class="page surface-light">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <aside class="banner" aria-label="Error" data-app-error hidden>
+    <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#circle-alert"></use></svg>
+    <p data-field="message" role="alert"></p>
+  </aside>
+
+  <!-- shared:header:start — keep identical on every page except aria-current -->
+  <header class="site-header surface-dark" data-header>
+    <div class="site-header__inner container">
+      <a class="wordmark" href="index.html" aria-label="Funshi Sushi, home">
+        <span class="wordmark__name" aria-hidden="true">Funshi</span>
+        <span class="wordmark__sub" aria-hidden="true">Sushi</span>
+      </a>
+      <nav class="site-nav" id="site-nav" aria-label="Main" data-nav>
+        <ul class="site-nav__list" role="list">
+          <li><a class="site-nav__link" href="menu.html" aria-current="page">Menu</a></li>
+          <li><a class="site-nav__link" href="index.html#story">Our story</a></li>
+          <li><a class="site-nav__link" href="index.html#visit">Visit us</a></li>
+        </ul>
+        <div class="site-nav__extra">
+          <p class="text-muted" data-business="address-inline"><span class="placeholder">Address to be confirmed</span></p>
+          <a class="button button--secondary" href="index.html#visit"><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#map-pin"></use></svg>Location and hours</a>
+        </div>
+      </nav>
+      <div class="site-header__actions">
+        <!-- Cart button: enabled in the cart phase -->
+        <button class="button button--icon cart-button" type="button" data-cart-open aria-label="Cart, 0 items" hidden>
+          <svg class="icon icon--lg" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#shopping-bag"></use></svg>
+          <span class="badge badge--count" data-cart-count data-count="0">0</span>
+        </button>
+        <button class="button button--icon site-header__toggle" type="button" data-nav-toggle aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+          <svg class="icon icon--lg icon-open" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#menu"></use></svg>
+          <svg class="icon icon--lg icon-close" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#x"></use></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <!-- shared:header:end -->
+
+  <main id="main" tabindex="-1" data-inert-on-overlay>
+    <section class="menu-page section section--tight" aria-labelledby="menu-title" data-menu-page>
+      <div class="container">
+        <div class="menu-page__head stack stack--5">
+          <div class="stack stack--3">
+            <h1 id="menu-title">Menu</h1>
+            <p class="t-lead text-muted">Choose a category, search for a dish, or show only what suits you. Tap a dish for its ingredients, allergens and sizes.</p>
+          </div>
+          <aside class="notice" aria-label="Sample menu" data-sample-menu hidden>
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#info"></use></svg>
+            <div class="stack stack--2">
+              <p class="notice__title">This is a sample menu</p>
+              <p>The dishes, prices, ingredients and allergens are examples, not the restaurant’s menu, and the images are illustrations. Prices are shown without a currency until it is confirmed.</p>
+            </div>
+          </aside>
+          <p class="notice" role="status" data-dish-missing hidden>
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#circle-alert"></use></svg>
+            That dish isn’t on the menu anymore. Here is everything that is.
+          </p>
+        </div>
+
+        <noscript>
+          <div class="notice">
+            <p>The menu needs JavaScript to show. Turn it on, or ask the restaurant for the menu directly.</p>
+          </div>
+        </noscript>
+
+        <div class="menu-layout with-sidebar" data-menu-ui hidden>
+          <div class="menu-layout__rail with-sidebar__rail">
+            <div class="menu-categories" role="group" aria-label="Categories" data-category-filter></div>
+          </div>
+
+          <div class="menu-layout__main">
+            <div class="menu-tools">
+              <div class="search-field" role="search">
+                <label class="t-label" for="menu-search">Search dishes</label>
+                <div class="search-field__control">
+                  <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#search"></use></svg>
+                  <input class="search-field__input" id="menu-search" type="search" autocomplete="off" enterkeyhint="search" spellcheck="false" maxlength="80" aria-describedby="menu-status" data-menu-search>
+                </div>
+              </div>
+              <div class="menu-tags">
+                <span class="t-label" id="menu-tags-label">Show only</span>
+                <div class="cluster" role="group" aria-labelledby="menu-tags-label" data-tag-filter></div>
+              </div>
+            </div>
+
+            <p class="menu-status t-small text-muted" id="menu-status" data-menu-status></p>
+
+            <div class="menu-sections" data-menu></div>
+
+            <div class="menu-empty" data-menu-empty hidden>
+              <h2 class="menu-empty__title">No dishes found</h2>
+              <p data-menu-empty-text></p>
+              <div class="cluster">
+                <button class="button button--secondary" type="button" data-menu-search-all hidden>Search all categories</button>
+                <button class="button button--primary" type="button" data-menu-clear>Clear filters</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <template id="tpl-menu-section">
+      <section class="menu-section">
+        <div class="menu-section__head">
+          <!-- Heading text is filled from js/data/menu.js by menu-view.js. -->
+          <!-- [html-validate-disable-next empty-heading] -->
+          <h2 class="menu-section__title" data-field="name"></h2>
+          <p class="menu-section__intro t-small text-muted" data-field="intro"></p>
+        </div>
+        <ul class="menu-section__list" role="list" data-items></ul>
+      </section>
+    </template>
+
+    <template id="tpl-menu-item">
+      <li class="menu-item" data-dish>
+        <article class="menu-item__inner">
+          <div class="menu-item__media" data-media></div>
+          <div class="menu-item__body">
+            <div class="menu-item__head">
+              <!-- Name and button text are filled from js/data/menu.js by menu-view.js. -->
+              <!-- [html-validate-disable-block empty-heading, text-content] -->
+              <h3 class="menu-item__name">
+                <button class="menu-item__open" type="button" aria-haspopup="dialog" data-open-dish><span data-field="name"></span></button>
+              </h3>
+              <span class="menu-item__leader" aria-hidden="true"></span>
+              <p class="menu-item__price t-price" data-field="price"></p>
+            </div>
+            <p class="menu-item__desc" data-field="description"></p>
+            <p class="menu-item__meta" data-meta><span data-field="pieces"></span></p>
+          </div>
+        </article>
+      </li>
+    </template>
+  </main>
+
+  <!-- shared:footer:start — keep identical on every page -->
+  <footer class="site-footer surface-dark" data-inert-on-overlay>
+    <div class="container">
+      <div class="site-footer__columns">
+        <div class="stack stack--3">
+          <a class="wordmark" href="index.html" aria-label="Funshi Sushi, home">
+            <span class="wordmark__name" aria-hidden="true">Funshi</span>
+            <span class="wordmark__sub" aria-hidden="true">Sushi</span>
+          </a>
+          <p class="text-muted"><span class="placeholder">Tagline to be confirmed</span></p>
+        </div>
+        <div>
+          <h2 class="site-footer__heading">Visit us</h2>
+          <div class="stack stack--2">
+            <p data-business="address-inline"><span class="placeholder">Address to be confirmed</span></p>
+            <p data-hours-summary><span class="placeholder">Opening hours to be confirmed</span></p>
+            <p><a href="index.html#visit">Location and hours</a></p>
+          </div>
+        </div>
+        <div>
+          <h2 class="site-footer__heading">Order</h2>
+          <ul class="site-footer__list" role="list">
+            <li><a href="menu.html"><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#chevron-right"></use></svg>See the menu</a></li>
+            <li data-business="whatsapp-item"><span class="placeholder">WhatsApp number to be confirmed</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="site-footer__legal">
+        <p>© 2026 Funshi Sushi</p>
+        <p>Icons by Lucide (ISC). Typefaces: Shippori Mincho B1 and Zen Kaku Gothic New (SIL OFL).</p>
+      </div>
+    </div>
+  </footer>
+  <!-- shared:footer:end -->
+  <dialog class="modal product-dialog surface-light" id="product-dialog" aria-labelledby="product-dialog-title" data-product-dialog>
+    <div class="modal__panel product-dialog__panel">
+      <div class="product-dialog__media" data-media></div>
+      <button class="button button--icon product-dialog__close" type="button" data-overlay-close aria-label="Close">
+        <svg class="icon icon--lg" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#x"></use></svg>
+      </button>
+      <section class="modal__body product-dialog__body" tabindex="0" aria-label="Dish details">
+        <div class="stack stack--2">
+          <p class="t-caption" data-field="category"></p>
+          <!-- Filled by product-dialog.js when the dialog opens. -->
+          <!-- [html-validate-disable-next empty-heading] -->
+          <h2 class="product-dialog__title" id="product-dialog-title" tabindex="-1" data-field="name"></h2>
+          <p class="product-dialog__desc" data-field="description"></p>
+          <p class="text-muted" data-field="details"></p>
+          <p class="product-dialog__meta" data-meta><span data-field="pieces"></span></p>
+        </div>
+
+        <p class="product-dialog__unavailable" data-unavailable-note hidden>
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#info"></use></svg>
+          This dish isn’t available today. It can’t be ordered until it’s back.
+        </p>
+
+        <div class="product-dialog__block" data-sizes hidden>
+          <h3 class="product-dialog__heading">Sizes</h3>
+          <ul class="product-dialog__sizes" role="list" data-sizes-list></ul>
+        </div>
+
+        <div class="product-dialog__block" data-ingredients>
+          <h3 class="product-dialog__heading">Ingredients</h3>
+          <p data-field="ingredients"></p>
+        </div>
+
+        <div class="product-dialog__block">
+          <h3 class="product-dialog__heading">Allergens</h3>
+          <p data-field="allergens"></p>
+          <p class="t-small text-muted">If you have an allergy, confirm with the restaurant before ordering.</p>
+        </div>
+
+        <p class="t-caption" data-sample-dish hidden>Sample dish: the price, ingredients, allergens and illustration are examples.</p>
+      </section>
+      <div class="modal__footer product-dialog__footer">
+        <p class="product-dialog__price t-price" data-field="price"></p>
+      </div>
+    </div>
+  </dialog>
+
+
+  <div class="visually-hidden" aria-live="polite" data-announcer></div>
+</body>
+</html>

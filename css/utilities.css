@@ -1,0 +1,45 @@
+/* ==========================================================================
+   Utilities — single-purpose helpers. Last layer, so they win.
+   Keep this file small: a utility is added only when used in 2+ places.
+   ========================================================================== */
+
+@layer utilities {
+  /* Hidden visually, still read by screen readers. */
+  .visually-hidden:not(:focus):not(:active) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .text-muted {
+    color: var(--text-muted);
+  }
+
+  /* Business information not yet provided by the owner (PRODUCT_BRIEF §0).
+     Visibly provisional: never mistaken for a real value. */
+  .placeholder {
+    font-style: italic;
+    color: var(--text-muted);
+    text-decoration: underline dashed 1px;
+    text-underline-offset: 0.25em;
+  }
+
+  /* Shown only when JavaScript is running / not running. */
+  @media (scripting: none) {
+    .js-only {
+      display: none !important;
+    }
+  }
+
+  @media (scripting: enabled) {
+    .no-js-only {
+      display: none !important;
+    }
+  }
+}

@@ -1,0 +1,33 @@
+/* ==========================================================================
+   Call to action — an akami band. Uses .surface-dark role tokens; only the
+   surface color changes (all dark-surface pairings pass on akami, see
+   tests/contrast.test.js: shari/kinari/wasabi on akami).
+   ========================================================================== */
+
+@layer components {
+  .cta {
+    --surface: var(--color-akami);
+    --surface-inset: var(--color-urushi);
+    --btn-primary-bg-hover: var(--color-shari-deep);
+    background-color: var(--surface);
+  }
+
+  .cta__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .cta__inner .t-lead {
+    color: var(--text);
+  }
+
+  @media (min-width: 64rem) {
+    .cta__inner {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: var(--space-8);
+    }
+  }
+}

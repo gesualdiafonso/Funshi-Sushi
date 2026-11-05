@@ -1,0 +1,68 @@
+/* ==========================================================================
+   Site footer — UX_ARCHITECTURE §3.4
+   ========================================================================== */
+
+@layer components {
+  .site-footer {
+    padding-block: var(--space-8) var(--space-6);
+  }
+
+  .site-footer__columns {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 40rem) {
+    .site-footer__columns {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .site-footer__columns {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 3fr);
+    }
+  }
+
+  /* Real <h2> for the document outline, styled at H4 level. */
+  .site-footer__heading {
+    margin-block-end: var(--space-3);
+    font-family: var(--font-body);
+    font-size: var(--text-h4);
+    font-weight: 700;
+    line-height: var(--leading-snug);
+    color: var(--text);
+  }
+
+  .site-footer__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-footer__list a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--tap-target);
+  }
+
+  .site-footer__legal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-5);
+    margin-block-start: var(--space-7);
+    padding-block-start: var(--space-5);
+    border-block-start: var(--border-width) solid var(--line);
+    color: var(--text-muted);
+    font-size: var(--text-small);
+  }
+
+  .site-footer__legal a {
+    color: inherit;
+  }
+}

@@ -1,0 +1,395 @@
+/* Funshi Sushi — page sections. */
+
+@layer sections {
+  /* ---------- Hero ---------- */
+
+  .hero {
+    padding-block: var(--space-6) var(--section-space);
+  }
+
+  .hero__inner {
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  .hero__text {
+    display: grid;
+    gap: var(--space-5);
+    align-content: center;
+  }
+
+  .hero__title {
+    font-size: var(--text-display);
+    line-height: var(--leading-tight);
+    max-inline-size: 11ch;
+  }
+
+  .js .hero__title {
+    animation: hero-in 700ms var(--ease-out) both;
+  }
+
+  @keyframes hero-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .js .hero__title {
+      animation: none;
+    }
+  }
+
+  .hero__lead {
+    font-size: var(--text-lead);
+    color: var(--text-muted);
+    max-inline-size: var(--measure-narrow);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .photo--hero {
+    aspect-ratio: var(--ratio-hero-mobile);
+    max-block-size: 62vh;
+    inline-size: 100%;
+  }
+
+  @media (min-width: 60em) {
+    .hero {
+      padding-block-start: var(--space-7);
+    }
+
+    .hero__inner {
+      grid-template-columns: 5fr 6fr;
+      gap: var(--space-8);
+      align-items: stretch;
+    }
+
+    .photo--hero {
+      block-size: clamp(30rem, calc(100vh - var(--header-height) - 7rem), 46rem);
+      max-block-size: none;
+      aspect-ratio: auto;
+    }
+  }
+
+  /* ---------- Story (asymmetric editorial) ---------- */
+
+  .story {
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  .story__media {
+    max-inline-size: 34rem;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: auto auto;
+  }
+
+  .story__photo-main {
+    grid-column: 1 / 6;
+    grid-row: 1;
+    aspect-ratio: var(--ratio-hero-mobile);
+  }
+
+  .story__photo-detail {
+    grid-column: 3 / 7;
+    grid-row: 1;
+    align-self: end;
+    margin-block-end: -2.5rem;
+    aspect-ratio: var(--ratio-ambience);
+    border: 6px solid var(--surface-warm);
+    box-sizing: content-box;
+  }
+
+  .story__text {
+    display: grid;
+    gap: var(--space-4);
+    align-content: center;
+    justify-items: start;
+    padding-block-start: var(--space-6);
+  }
+
+  .story__lead {
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
+    font-size: var(--text-h3);
+    line-height: var(--leading-snug);
+  }
+
+  @media (min-width: 60em) {
+    .story {
+      grid-template-columns: 7fr 5fr;
+      gap: var(--space-9);
+    }
+
+    .story__media {
+      max-inline-size: none;
+    }
+
+    .story__text {
+      padding-block-start: 0;
+    }
+  }
+
+  /* ---------- Featured dishes ---------- */
+
+  .dish-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6) var(--space-4);
+  }
+
+  @media (min-width: 40em) {
+    .dish-grid {
+      gap: var(--space-7) var(--space-5);
+    }
+  }
+
+  @media (min-width: 60em) {
+    .dish-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    /* Stagger every second dish for a less templated rhythm. */
+    .dish-grid > :nth-child(even) {
+      margin-block-start: var(--space-8);
+    }
+  }
+
+  /* ---------- Ordering ---------- */
+
+  .steps {
+    display: grid;
+    gap: var(--space-6);
+    counter-reset: step;
+    margin-block-end: var(--space-8);
+  }
+
+  .steps__item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-2) var(--space-4);
+    counter-increment: step;
+  }
+
+  .steps__item::before {
+    content: counter(step);
+    grid-row: span 2;
+    display: grid;
+    place-items: center;
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+    border: var(--border-width-strong) solid var(--color-forest);
+    border-radius: var(--radius-sm);
+    color: var(--color-forest);
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
+    font-size: 1.25rem;
+  }
+
+  .steps__title {
+    font-size: 1.125rem;
+    align-self: center;
+  }
+
+  .steps__item p {
+    grid-column: 2;
+    color: var(--text-muted);
+  }
+
+  @media (min-width: 60em) {
+    .steps {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+
+    .steps__item {
+      grid-template-columns: 1fr;
+      align-content: start;
+      padding-block-start: var(--space-5);
+      border-block-start: var(--border-width) solid var(--border-subtle);
+    }
+
+    .steps__item::before {
+      grid-row: auto;
+      margin-block-end: var(--space-2);
+    }
+
+    .steps__item p {
+      grid-column: 1;
+    }
+  }
+
+  .options {
+    display: grid;
+    gap: var(--space-5);
+    margin-block-end: var(--space-5);
+  }
+
+  .option {
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
+    padding: var(--space-6);
+    background: var(--surface-raised);
+    border: var(--border-width) solid var(--border-subtle);
+    border-radius: var(--radius-md);
+  }
+
+  .option__title {
+    font-family: var(--font-display);
+    font-size: var(--text-h2);
+    line-height: var(--leading-snug);
+  }
+
+  .option__facts {
+    display: grid;
+    gap: var(--space-2);
+    padding-block-start: var(--space-3);
+    border-block-start: var(--border-width) solid var(--border-subtle);
+  }
+
+  .option__facts div {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    gap: var(--space-3);
+  }
+
+  .option__facts dt {
+    font-weight: var(--weight-medium);
+  }
+
+  @media (min-width: 40em) {
+    .options {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  /* ---------- Gallery ---------- */
+
+  .gallery {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-forest) transparent;
+    padding-block-end: var(--section-space);
+  }
+
+  .gallery:focus-visible {
+    outline-offset: -4px;
+  }
+
+  .gallery__list {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--space-4);
+    inline-size: max-content;
+    padding-inline: var(--gutter);
+  }
+
+  .gallery__item {
+    scroll-snap-align: start;
+    flex: none;
+    block-size: clamp(14rem, 45vw, 26rem);
+  }
+
+  .gallery__item .photo {
+    block-size: 100%;
+    aspect-ratio: var(--ratio-ambience);
+  }
+
+  .gallery__item--tall {
+    block-size: clamp(17.5rem, 56vw, 32rem);
+  }
+
+  .gallery__item--tall .photo {
+    aspect-ratio: var(--ratio-hero-mobile);
+  }
+
+  .gallery-controls {
+    display: none;
+    gap: var(--space-2);
+  }
+
+  @media (min-width: 40em) {
+    .gallery-controls:not([hidden]) {
+      display: flex;
+    }
+  }
+
+  /* ---------- Contact ---------- */
+
+  .contact {
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  .contact__intro {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+  }
+
+  .contact-details {
+    display: grid;
+    gap: var(--space-4);
+    margin-block-start: var(--space-4);
+    padding-block-start: var(--space-5);
+    border-block-start: var(--border-width) solid var(--border-subtle);
+  }
+
+  .contact-details__row {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .contact-details dt {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-label);
+    font-weight: var(--weight-bold);
+    color: var(--color-forest);
+  }
+
+  .contact-details dd {
+    padding-inline-start: calc(1.25rem + var(--space-2));
+    overflow-wrap: anywhere;
+  }
+
+  .contact-details dd ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .contact-form {
+    display: grid;
+    gap: var(--space-5);
+    align-content: start;
+    padding: var(--space-5);
+    background: var(--surface-raised);
+    border: var(--border-width) solid var(--border-subtle);
+    border-radius: var(--radius-md);
+  }
+
+  @media (min-width: 40em) {
+    .contact-form {
+      padding: var(--space-6);
+    }
+  }
+
+  @media (min-width: 60em) {
+    .contact {
+      grid-template-columns: 5fr 6fr;
+      gap: var(--space-8);
+    }
+  }
+}

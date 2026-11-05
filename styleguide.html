@@ -1,0 +1,463 @@
+<!doctype html>
+<!-- lang: working language until {{SITE_LANGUAGE}} is confirmed (PRODUCT_BRIEF §11) -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <title>Design system · Funshi Sushi</title>
+  <meta name="description" content="Internal design-system reference.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#240910">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <link rel="preload" href="assets/fonts/zen-kaku-gothic-new-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/shippori-mincho-b1-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components/button.css">
+  <link rel="stylesheet" href="css/components/badge.css">
+  <link rel="stylesheet" href="css/components/banner.css">
+  <link rel="stylesheet" href="css/components/header.css">
+  <link rel="stylesheet" href="css/components/footer.css">
+  <link rel="stylesheet" href="css/components/chip.css">
+  <link rel="stylesheet" href="css/components/card.css">
+  <link rel="stylesheet" href="css/components/dialog.css">
+  <link rel="stylesheet" href="css/components/styleguide.css">
+  <link rel="stylesheet" href="css/utilities.css">
+
+  <link rel="modulepreload" href="js/app.js">
+  <link rel="modulepreload" href="js/config.js">
+  <link rel="modulepreload" href="js/strings.js">
+  <link rel="modulepreload" href="js/core/features.js">
+  <link rel="modulepreload" href="js/ui/dom.js">
+  <link rel="modulepreload" href="js/ui/overlay.js">
+  <link rel="modulepreload" href="js/ui/header.js">
+  <link rel="modulepreload" href="js/ui/announcer.js">
+  <link rel="modulepreload" href="js/data/menu.js">
+  <link rel="modulepreload" href="js/core/catalog.js">
+  <link rel="modulepreload" href="js/core/money.js">
+  <link rel="modulepreload" href="js/core/hours.js">
+  <link rel="modulepreload" href="js/ui/business-info.js">
+  <link rel="modulepreload" href="js/ui/hours-view.js">
+  <script type="module" src="js/pages/styleguide.js"></script>
+</head>
+<body class="page surface-light">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <aside class="banner" aria-label="Error" data-app-error hidden>
+    <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#circle-alert"></use></svg>
+    <p data-field="message" role="alert"></p>
+  </aside>
+
+  <!-- shared:header:start — keep identical on every page except aria-current -->
+  <header class="site-header surface-dark" data-header>
+    <div class="site-header__inner container">
+      <a class="wordmark" href="index.html" aria-label="Funshi Sushi, home">
+        <span class="wordmark__name" aria-hidden="true">Funshi</span>
+        <span class="wordmark__sub" aria-hidden="true">Sushi</span>
+      </a>
+      <nav class="site-nav" id="site-nav" aria-label="Main" data-nav>
+        <ul class="site-nav__list" role="list">
+          <li><a class="site-nav__link" href="menu.html">Menu</a></li>
+          <li><a class="site-nav__link" href="index.html#story">Our story</a></li>
+          <li><a class="site-nav__link" href="index.html#visit">Visit us</a></li>
+        </ul>
+        <div class="site-nav__extra">
+          <p class="text-muted" data-business="address-inline"><span class="placeholder">Address to be confirmed</span></p>
+          <a class="button button--secondary" href="index.html#visit"><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#map-pin"></use></svg>Location and hours</a>
+        </div>
+      </nav>
+      <div class="site-header__actions">
+        <!-- Cart button: enabled in the cart phase -->
+        <button class="button button--icon cart-button" type="button" data-cart-open aria-label="Cart, 0 items" hidden>
+          <svg class="icon icon--lg" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#shopping-bag"></use></svg>
+          <span class="badge badge--count" data-cart-count data-count="0">0</span>
+        </button>
+        <button class="button button--icon site-header__toggle" type="button" data-nav-toggle aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+          <svg class="icon icon--lg icon-open" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#menu"></use></svg>
+          <svg class="icon icon--lg icon-close" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#x"></use></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <!-- shared:header:end -->
+
+  <main id="main" tabindex="-1" data-inert-on-overlay>
+    <section class="section section--tight">
+      <div class="container">
+        <div class="stack stack--5">
+          <p class="t-caption">Internal page · not linked · not indexed</p>
+          <h1>Design system</h1>
+          <p class="t-lead">Phase 05 foundation: tokens, type, layout patterns and components, on both surfaces. Every component here uses role tokens, so the same markup appears on rice and on lacquer.</p>
+          <nav aria-label="Styleguide sections">
+            <ul class="cluster" role="list">
+              <li><a class="chip" href="#sg-color">Color</a></li>
+              <li><a class="chip" href="#sg-type">Typography</a></li>
+              <li><a class="chip" href="#sg-grid">Grid</a></li>
+              <li><a class="chip" href="#sg-layout">Layout patterns</a></li>
+              <li><a class="chip" href="#sg-buttons">Buttons</a></li>
+              <li><a class="chip" href="#sg-chips">Chips and badges</a></li>
+              <li><a class="chip" href="#sg-cards">Cards</a></li>
+              <li><a class="chip" href="#sg-overlay">Overlay and events</a></li>
+              <li><a class="chip" href="#sg-icons">Icons</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Color ===================================================== -->
+    <section class="section section--tight" id="sg-color" aria-labelledby="sg-color-title">
+      <div class="container">
+        <h2 id="sg-color-title">Color</h2>
+        <ul class="auto-grid sg-swatches" role="list">
+          <li class="sg-swatch" data-color="urushi"><span>Urushi</span><code>#240910</code></li>
+          <li class="sg-swatch" data-color="akami"><span>Akami</span><code>#4B011D</code></li>
+          <li class="sg-swatch" data-color="akami-hover"><span>Akami hover</span><code>#62102C</code></li>
+          <li class="sg-swatch sg-swatch--light" data-color="shari"><span>Shari</span><code>#F2EEE8</code></li>
+          <li class="sg-swatch sg-swatch--light" data-color="shari-deep"><span>Shari deep</span><code>#E6DFD5</code></li>
+          <li class="sg-swatch sg-swatch--light" data-color="kinari"><span>Kinari</span><code>#B8A994</code></li>
+          <li class="sg-swatch" data-color="stone"><span>Stone</span><code>#6E5F5C</code></li>
+          <li class="sg-swatch sg-swatch--light" data-color="wasabi"><span>Wasabi</span><code>#A9B96B</code></li>
+          <li class="sg-swatch" data-color="wasabi-deep"><span>Wasabi deep</span><code>#56632A</code></li>
+          <li class="sg-swatch" data-color="error"><span>Error</span><code>#A3231B</code></li>
+        </ul>
+        <p class="t-small text-muted">Contrast ratios for every approved pairing are checked automatically by <code>tests/contrast.test.js</code>.</p>
+      </div>
+    </section>
+
+    <!-- ===== Typography =================================================== -->
+    <section class="section section--tight" id="sg-type" aria-labelledby="sg-type-title">
+      <div class="container">
+        <h2 id="sg-type-title">Typography</h2>
+        <div class="split">
+          <div class="stack stack--6">
+            <p class="t-display">Funshi Sushi</p>
+            <p class="sg-h1">Heading one: Menu</p>
+            <p class="sg-h2">Heading two: Uramaki</p>
+            <p class="sg-h3">Heading three: Salmon uramaki</p>
+            <p class="sg-h4">Heading four: Your details</p>
+          </div>
+          <div class="stack stack--5">
+            <p class="t-lead">Lead. Fresh sushi, made with care, ordered in a few taps.</p>
+            <p>Body. Cream cheese, cucumber and sesame, rolled inside out and finished with a thin slice of salmon. Two pieces per order, cut to order at the counter.</p>
+            <p>Accents: ação, pão, salmão grelhado, coração, maçã — piña, niño, ¿cuántos?, ¡listo! — crème, über.</p>
+            <p class="t-small">Small. 8 pcs · contains fish, sesame and milk.</p>
+            <p class="t-label">Label. Phone (WhatsApp)</p>
+            <p class="t-caption">Caption. Illustrative image.</p>
+            <p class="t-price">Price. $ 12.345</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Grid ======================================================= -->
+    <section class="section section--tight" id="sg-grid" aria-labelledby="sg-grid-title">
+      <div class="container">
+        <h2 id="sg-grid-title">Grid</h2>
+        <p class="text-muted">4 columns below 640px, 8 from 640px, 12 from 1024px. Resize to see spans reflow.</p>
+        <div class="grid sg-grid">
+          <div class="span-4 span-sm-8 span-lg-12">12 / 8 / 4</div>
+          <div class="span-4 span-sm-5 span-lg-7">7 / 5 / 4</div>
+          <div class="span-4 span-sm-3 span-lg-5">5 / 3 / 4</div>
+          <div class="span-2 span-sm-4 span-lg-4">4 / 4 / 2</div>
+          <div class="span-2 span-sm-4 span-lg-4">4 / 4 / 2</div>
+          <div class="span-4 span-sm-8 span-lg-4">4 / 8 / 4</div>
+          <div class="span-4 span-sm-6 span-lg-5 start-lg-8">5, starts col 8</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Layout patterns ============================================ -->
+    <section class="section section--tight" id="sg-layout" aria-labelledby="sg-layout-title">
+      <div class="container">
+        <h2 id="sg-layout-title">Layout patterns</h2>
+        <div class="stack stack--7">
+          <div class="stack stack--3">
+            <h3>Split (7 / 5)</h3>
+            <div class="split">
+              <div class="sg-box">Text column — stacks first on small screens</div>
+              <div class="sg-box sg-box--tall">Media column</div>
+            </div>
+          </div>
+          <div class="stack stack--3">
+            <h3>Cluster</h3>
+            <div class="cluster">
+              <span class="sg-box">One</span><span class="sg-box">Two</span><span class="sg-box">Three</span><span class="sg-box">Four</span>
+            </div>
+          </div>
+          <div class="stack stack--3">
+            <h3>Scroller (scroll-snap row)</h3>
+            <div class="scroller scroller--bleed" tabindex="0" aria-label="Scroller example">
+              <div class="sg-box sg-box--tall">1</div><div class="sg-box sg-box--tall">2</div><div class="sg-box sg-box--tall">3</div><div class="sg-box sg-box--tall">4</div><div class="sg-box sg-box--tall">5</div>
+            </div>
+          </div>
+          <div class="stack stack--3">
+            <h3>With sidebar (sticky rail from 1024px)</h3>
+            <div class="with-sidebar">
+              <div class="with-sidebar__rail sg-box">Rail</div>
+              <div class="sg-box sg-box--tall">Main column</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Buttons ==================================================== -->
+    <section class="section section--tight" id="sg-buttons" aria-labelledby="sg-buttons-title">
+      <div class="container">
+        <h2 id="sg-buttons-title">Buttons</h2>
+        <div class="grid">
+          <div class="span-4 span-sm-8 span-lg-6 sg-panel surface-light stack stack--5">
+            <h3>On rice</h3>
+            <div class="cluster">
+              <button class="button button--primary" type="button">See the menu</button>
+              <button class="button button--secondary" type="button">View cart</button>
+              <button class="button button--tertiary" type="button">Clear filters</button>
+            </div>
+            <div class="cluster">
+              <button class="button button--primary button--compact" type="button">Add</button>
+              <button class="button button--primary button--large" type="button">Send order via WhatsApp</button>
+            </div>
+            <div class="cluster">
+              <button class="button button--destructive" type="button"><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#trash-2"></use></svg>Remove</button>
+              <button class="button button--icon" type="button" aria-label="Increase quantity"><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#plus"></use></svg></button>
+              <button class="button button--primary" type="button" aria-disabled="true" aria-describedby="sg-disabled-reason">Go to checkout</button>
+              <span class="t-small text-muted" id="sg-disabled-reason">Add $ 2.000 more for delivery</span>
+            </div>
+            <div class="cluster">
+              <button class="button button--primary button--compact" type="button" data-sg-add>Add</button>
+              <button class="button button--secondary" type="button" data-sg-busy><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#message-circle"></use></svg>Open WhatsApp again</button>
+            </div>
+            <p class="t-small text-muted">Try "Add" (added state + announcement) and "Open WhatsApp again" (busy state).</p>
+          </div>
+          <div class="span-4 span-sm-8 span-lg-6 sg-panel surface-dark stack stack--5">
+            <h3>On lacquer</h3>
+            <div class="cluster">
+              <button class="button button--primary" type="button">See the menu</button>
+              <button class="button button--secondary" type="button">View cart</button>
+              <button class="button button--tertiary" type="button">Clear filters</button>
+            </div>
+            <div class="cluster">
+              <button class="button button--primary button--compact" type="button">Add</button>
+              <button class="button button--primary button--large" type="button">Send order via WhatsApp</button>
+            </div>
+            <div class="cluster">
+              <button class="button button--destructive" type="button"><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#trash-2"></use></svg>Remove</button>
+              <button class="button button--icon" type="button" aria-label="Increase quantity"><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#plus"></use></svg></button>
+              <button class="button button--primary" type="button" aria-disabled="true">Go to checkout</button>
+            </div>
+            <div class="cluster">
+              <button class="button button--primary button--compact" type="button" data-state="added"><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#check"></use></svg>Added</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Chips & badges ============================================= -->
+    <section class="section section--tight" id="sg-chips" aria-labelledby="sg-chips-title">
+      <div class="container">
+        <h2 id="sg-chips-title">Chips and badges</h2>
+        <div class="grid">
+          <div class="span-4 span-sm-8 span-lg-6 sg-panel surface-light stack stack--5">
+            <h3>Category navigation (links)</h3>
+            <nav aria-label="Example categories">
+              <ul class="scroller sg-chip-row" role="list">
+                <li><a class="chip" href="#sg-chips" aria-current="true">Nigiri</a></li>
+                <li><a class="chip" href="#sg-chips">Uramaki</a></li>
+                <li><a class="chip" href="#sg-chips">Hot rolls</a></li>
+                <li><a class="chip" href="#sg-chips">Sashimi</a></li>
+                <li><a class="chip" href="#sg-chips">Combos</a></li>
+                <li><a class="chip" href="#sg-chips">Drinks</a></li>
+              </ul>
+            </nav>
+            <h3>Filters (toggles)</h3>
+            <div class="cluster" role="group" aria-label="Example filters">
+              <button class="chip" type="button" aria-pressed="true" data-sg-toggle><svg class="icon icon--sm chip__check" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#check"></use></svg>Cooked</button>
+              <button class="chip" type="button" aria-pressed="false" data-sg-toggle><svg class="icon icon--sm chip__check" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#check"></use></svg>Vegetarian</button>
+              <button class="chip" type="button" aria-pressed="false" data-sg-toggle><svg class="icon icon--sm chip__check" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#check"></use></svg>Spicy</button>
+            </div>
+            <h3>Badges</h3>
+            <div class="cluster">
+              <span class="badge">Raw</span>
+              <span class="badge"><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#leaf"></use></svg>Vegetarian</span>
+              <span class="badge"><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#flame"></use></svg>Spicy</span>
+              <span class="badge badge--signal">Open now · until 23:00</span>
+              <span class="badge badge--count">3</span>
+            </div>
+          </div>
+          <div class="span-4 span-sm-8 span-lg-6 sg-panel surface-dark stack stack--5">
+            <h3>On lacquer</h3>
+            <div class="cluster">
+              <a class="chip" href="#sg-chips" aria-current="true">Nigiri</a>
+              <a class="chip" href="#sg-chips">Uramaki</a>
+              <button class="chip" type="button" aria-pressed="false" data-sg-toggle><svg class="icon icon--sm chip__check" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#check"></use></svg>Cooked</button>
+            </div>
+            <div class="cluster">
+              <span class="badge">Raw</span>
+              <span class="badge badge--signal">Open now · until 23:00</span>
+              <span class="badge badge--count">3</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Cards ====================================================== -->
+    <section class="section section--tight" id="sg-cards" aria-labelledby="sg-cards-title">
+      <div class="container">
+        <h2 id="sg-cards-title">Cards</h2>
+        <p class="text-muted">Demo dishes and prices are illustrative. The tile replaces photos until real ones exist.</p>
+        <ul class="auto-grid" role="list" data-min="cards">
+          <li>
+            <article class="dish-card" aria-labelledby="sg-dish-1">
+              <div class="dish-card__inner">
+                <div class="dish-card__media"><div class="tile" aria-hidden="true"><span class="tile__name">Nigiri</span></div></div>
+                <div class="dish-card__body">
+                  <h3 class="dish-card__title" id="sg-dish-1">Salmon nigiri</h3>
+                  <p class="dish-card__desc">Two pieces, lightly torched, with a brush of soy.</p>
+                  <p class="dish-card__meta"><span>2 pcs</span><span class="badge">Raw</span></p>
+                </div>
+                <div class="dish-card__footer">
+                  <p class="dish-card__price t-price">$ 0.000</p>
+                  <button class="button button--primary button--compact" type="button" aria-label="Add salmon nigiri">Add</button>
+                </div>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="dish-card" aria-labelledby="sg-dish-2">
+              <div class="dish-card__inner">
+                <div class="dish-card__media"><div class="tile" aria-hidden="true"><span class="tile__name">Hot rolls</span></div></div>
+                <div class="dish-card__body">
+                  <h3 class="dish-card__title" id="sg-dish-2">Hot roll</h3>
+                  <p class="dish-card__desc">Breaded and fried uramaki with salmon and cream cheese, finished with a sweet soy glaze that runs long to test clamping.</p>
+                  <p class="dish-card__meta"><span>8–16 pcs</span><span class="badge">Cooked</span></p>
+                </div>
+                <div class="dish-card__footer">
+                  <p class="dish-card__price t-price">from $ 0.000</p>
+                  <button class="button button--primary button--compact" type="button" aria-label="Choose size of hot roll">Choose</button>
+                </div>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="dish-card" aria-labelledby="sg-dish-3">
+              <div class="dish-card__inner">
+                <div class="dish-card__media"><div class="tile" aria-hidden="true"><span class="tile__name">Uramaki</span></div></div>
+                <div class="dish-card__body">
+                  <h3 class="dish-card__title" id="sg-dish-3">Vegetable uramaki</h3>
+                  <p class="dish-card__desc">Cucumber, avocado and carrot.</p>
+                  <p class="dish-card__meta"><span>8 pcs</span><span class="badge"><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#leaf"></use></svg>Vegetarian</span></p>
+                </div>
+                <div class="dish-card__footer">
+                  <p class="dish-card__price t-price">$ 0.000</p>
+                  <button class="button button--primary button--compact" type="button" aria-label="Add vegetable uramaki">Add</button>
+                </div>
+              </div>
+            </article>
+          </li>
+        </ul>
+        <div class="grid">
+          <div class="span-4 span-sm-8 span-lg-7 sg-panel surface-dark">
+            <article class="dish-card" aria-labelledby="sg-dish-4">
+              <div class="dish-card__inner">
+                <div class="dish-card__media"><div class="tile" aria-hidden="true"><span class="tile__name">Combos</span></div></div>
+                <div class="dish-card__body">
+                  <h3 class="dish-card__title" id="sg-dish-4">Counter combo</h3>
+                  <p class="dish-card__desc">A wide card: the container query puts the media beside the text when the card itself is wide enough.</p>
+                  <p class="dish-card__meta"><span>20 pcs</span><span class="badge">Raw</span><span class="badge">Cooked</span></p>
+                </div>
+                <div class="dish-card__footer">
+                  <p class="dish-card__price t-price">$ 0.000</p>
+                  <button class="button button--primary button--compact" type="button" aria-label="Add counter combo">Add</button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Overlay & global events ===================================== -->
+    <section class="section section--tight" id="sg-overlay" aria-labelledby="sg-overlay-title">
+      <div class="container">
+        <h2 id="sg-overlay-title">Overlay and global events</h2>
+        <p>The dialog closes with the close button, Esc, a click on the backdrop, or the browser back button. Focus returns to the button that opened it. On small screens, the header menu uses the same controller.</p>
+        <div class="cluster">
+          <button class="button button--secondary" type="button" data-overlay-target="#sg-dialog" aria-haspopup="dialog">Open example dialog</button>
+          <button class="button button--secondary" type="button" data-sg-announce>Make an announcement</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Icons ====================================================== -->
+    <section class="section section--tight" id="sg-icons" aria-labelledby="sg-icons-title">
+      <div class="container">
+        <h2 id="sg-icons-title">Icons</h2>
+        <ul class="auto-grid sg-icons" role="list" data-sg-icons></ul>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- shared:footer:start — keep identical on every page -->
+  <footer class="site-footer surface-dark" data-inert-on-overlay>
+    <div class="container">
+      <div class="site-footer__columns">
+        <div class="stack stack--3">
+          <a class="wordmark" href="index.html" aria-label="Funshi Sushi, home">
+            <span class="wordmark__name" aria-hidden="true">Funshi</span>
+            <span class="wordmark__sub" aria-hidden="true">Sushi</span>
+          </a>
+          <p class="text-muted"><span class="placeholder">Tagline to be confirmed</span></p>
+        </div>
+        <div>
+          <h2 class="site-footer__heading">Visit us</h2>
+          <div class="stack stack--2">
+            <p data-business="address-inline"><span class="placeholder">Address to be confirmed</span></p>
+            <p data-hours-summary><span class="placeholder">Opening hours to be confirmed</span></p>
+            <p><a href="index.html#visit">Location and hours</a></p>
+          </div>
+        </div>
+        <div>
+          <h2 class="site-footer__heading">Order</h2>
+          <ul class="site-footer__list" role="list">
+            <li><a href="menu.html"><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#chevron-right"></use></svg>See the menu</a></li>
+            <li data-business="whatsapp-item"><span class="placeholder">WhatsApp number to be confirmed</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="site-footer__legal">
+        <p>© 2026 Funshi Sushi</p>
+        <p>Icons by Lucide (ISC). Typefaces: Shippori Mincho B1 and Zen Kaku Gothic New (SIL OFL).</p>
+      </div>
+    </div>
+  </footer>
+  <!-- shared:footer:end -->
+
+  <dialog class="modal surface-light" id="sg-dialog" aria-labelledby="sg-dialog-title">
+    <div class="modal__panel">
+      <div class="modal__header">
+        <h2 id="sg-dialog-title">Example dialog</h2>
+        <button class="button button--icon" type="button" data-overlay-close aria-label="Close"><svg class="icon icon--lg" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#x"></use></svg></button>
+      </div>
+      <div class="modal__body stack">
+        <p>Focus is contained here. Press Esc, click outside, use the back button, or the close button.</p>
+        <label class="t-label" for="sg-dialog-input">A focusable field</label>
+        <input id="sg-dialog-input" type="text" class="sg-input" autocomplete="off">
+      </div>
+      <div class="modal__footer cluster cluster--between">
+        <button class="button button--tertiary" type="button" data-overlay-close>Cancel</button>
+        <button class="button button--primary" type="button" data-overlay-close>Done</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div class="visually-hidden" aria-live="polite" data-announcer></div>
+</body>
+</html>

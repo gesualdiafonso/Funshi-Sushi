@@ -1,0 +1,200 @@
+# Funshi Sushi — Phase 06 Completion Report
+
+| | |
+|---|---|
+| **Phase** | 06 — Website Development (institutional site) |
+| **Date** | 2026-11-04 |
+| **Branch** | `phase/06-website` (local; based on `phase/05-foundation`) |
+| **Status** | Complete — awaiting approval |
+
+---
+
+## 1. Summary
+
+The home page is built with all ten suggested sections, on the Phase 05 foundation.
+
+- **Business facts** come from `js/config.js` on every page. While a fact is missing, the page shows a visible placeholder.
+- **Featured dishes** render from the menu data.
+- **Opening hours** are calculated in the restaurant's own time zone.
+- **No real business information is invented.** Prices show "Price to be confirmed", the restaurant's story is an explicit draft slot, and a preview notice says so on every page.
+
+| Check | Result |
+|---|---|
+| Unit tests | **65 / 65** pass |
+| Home-page browser checks | **55 / 55** pass |
+| All-pages regression suite (Phase 05) | **99 / 99** pass |
+| HTML validation | **0 errors** |
+| axe (WCAG 2.2 AA) | **0 violations**, at 360 and 1440 px and with a filled-in config |
+
+---
+
+## 2. Sections
+
+| # | Section | Implementation | Surface |
+|---|---|---|---|
+| 1 | Header and navigation | Shared header, **transparent over the hero** and solid once scrolled; mobile panel; anchor links land below the sticky header | Dark |
+| 2 | Hero | Display title, value proposition, two calls to action (See the menu / Location and hours), live open/closed status when hours are known. **Art-directed** illustration: a portrait composition on phones, landscape bleeding off the right edge on desktop. The page's one motion moment (the image settles, the title fades in). | Dark |
+| 3 | Restaurant introduction | One editorial statement + short lead; 7 / 5 asymmetric grid | Light |
+| 4 | About the restaurant | Illustration + **draft slot** for the real story (dashed box: "The restaurant's story goes here"). The site does not write the restaurant's history for it. | Light |
+| 5 | Culinary philosophy | Four principles on hairline rules (not numbered, because they are not a sequence); 1 / 2 / 4 columns | Dark |
+| 6 | Featured dishes | 4 cards rendered from `js/data/menu.js` through a `<template>`. Scroll-snap row on mobile (the next card peeks in), 4 columns on desktop. "View on menu" links to `menu.html?dish=<slug>`. | Light |
+| 7 | Benefits and differentiators | Ordering on WhatsApp · prices up front · delivery or pickup · nothing charged online | Light inset |
+| 8 | Call to action | Akami band: "See the menu"; a WhatsApp button appears only when a valid number is configured | Akami |
+| 9 | Location and contact | Address (+ maps link), weekly hours table with today marked, status line, WhatsApp and phone — all from config, with placeholders until then | Light |
+| 10 | Footer | Shared footer, now config-driven: address, open-status summary, WhatsApp link | Dark |
+
+---
+
+## 3. What Was Built
+
+### 3.1 Logic (pure, tested in Node)
+
+| Module | Purpose | Tests |
+|---|---|---|
+| `js/core/hours.js` | Open / closing-soon / closed + next opening, **in the restaurant's time zone**. Handles split shifts, shifts past midnight and the Sunday→Monday wrap. | 12 cases, including a device in another time zone |
+| `js/core/money.js` | Integer minor units → `Intl.NumberFormat`; returns `null` when the amount, locale or currency is unknown | 4 |
+| `js/core/catalog.js` | Validates menu data; invalid products are excluded and reported, so one data mistake never breaks the menu. Indexes; "from" prices; piece ranges; featured selection. | 6, including "**demo data invents no prices**" |
+| `js/core/features.js` | Adds `hasWhatsapp` and `hasPhone` | Updated |
+
+### 3.2 Views (DOM)
+
+| Module | Purpose |
+|---|---|
+| `js/ui/business-info.js` | Config → address, maps, WhatsApp, phone on every page. Links are revealed only when the value exists; external links get `noopener` and a "(opens in a new tab)" hint. |
+| `js/ui/hours-view.js` | Status line (hero, visit, footer) and the hours table (localized weekday names, today marked with `aria-current="date"` plus weight and a rule, never color alone). Refreshes every minute and pauses in background tabs. |
+| `js/ui/featured.js` | Featured cards from data. The section hides itself if nothing is featured (no empty box). |
+
+### 3.3 Data
+
+`js/data/menu.js` holds **demo data**: 7 common sushi dishes in 5 categories, described generically, with **every price `null`**. `IS_DEMO_MENU = true` keeps the demo notices visible.
+
+### 3.4 Images — "Optimized images"
+
+No photography exists, and a stock photo of someone else's sushi would misrepresent the food (BRAND_GUIDELINES §6.3). So the site uses **three original illustrations**, each captioned "Illustration" on the page:
+- a hero in landscape;
+- a separate hero composition for portrait (phones);
+- a counter scene.
+
+| Item | Detail |
+|---|---|
+| Sources | `assets/images/src/*.svg`, generated by `tools/illustrations.py` (seeded, reproducible) |
+| Pipeline | `tools/build-images.mjs` (dev-only, uses `sharp`) → **AVIF, WebP and JPEG** at 3–4 widths each (33 files). Real photos will reuse the same pipeline and file names. |
+| Delivery | `<picture>` with art direction (`media`), `srcset` + `sizes`, `width`/`height` on every source. Hero: `fetchpriority="high"`, eager. Story: `loading="lazy"`, `decoding="async"`. |
+| Weight | Hero AVIF ≈ 9 KB (phone) / ≈ 13 KB (desktop). **Measured image bytes on first load at 1440 px: under 60 KB** (tested). |
+
+The first draft of the illustration was rejected in review. The ginger read as cherry-blossom petals (a cliché the brand rules out), the fish hid the rice so the nigiri looked like pills, and the searing marks looked like stains. It was redrawn with knife-cut fish ends, visible rice grain, and a separate portrait composition, because cropping the landscape version cut the dishes off on phones.
+
+### 3.5 Shared-page changes
+
+Applied identically to all pages, and enforced by the consistency test:
+- **Config hooks** in the header panel and footer (`data-business`, `data-hours-summary`).
+- **Preview notice and startup-error banner** are now labelled `<aside>` landmarks (fixes an axe "content outside landmarks" finding).
+- **Two new icons** in the sprite: `receipt-text` and `wallet`.
+
+---
+
+## 4. Validation
+
+### 4.1 Home-page browser suite — Playwright + Chrome
+
+**55 / 55 pass.** It runs twice: once with the shipped placeholder config, once with a test config (fake values, served only during the test) to exercise every config-driven view.
+
+| Area | Verified |
+|---|---|
+| 4 widths (360, 768, 1024, 1440) | No console errors or failed requests; no horizontal overflow; 4 featured cards from data; every price "Price to be confirmed"; correct art-directed AVIF hero chosen per width; placeholders stay when facts are unknown; preview notice visible; header transparent at the top and solid after scroll |
+| Filled config | Status shown; hours table has 7 rows with exactly one marked today; WhatsApp links revealed (`https://wa.me/…`, `noopener`); footer WhatsApp replaces its placeholder; address in block and inline forms; `tel:` and maps links; contact placeholder hidden; preview notice **still** shown (the menu is still demo data) |
+| Navigation | "Our story" and "Visit us" headings land below the sticky header; every visible CTA has a real destination; mobile panel → "Visit us" closes the panel, scrolls there and moves focus to the section |
+| No JavaScript | Hero, story, visit and CTAs are usable; the menu is reachable from 3+ links; placeholders visible |
+| Images | Hero eager + high priority, others lazy; all have `width`/`height`/descriptive `alt`; first-load image bytes ≤ 60 KB |
+| axe | 0 violations at 360, at 1440, and with the filled config |
+
+### 4.2 Bugs found and fixed during validation
+
+| Found | Cause | Fix |
+|---|---|---|
+| Mobile menu → "Visit us" updated the URL and focus but **didn't scroll** | The browser restores the scroll position after `history.back()` (used to consume the panel's history entry), overriding the anchor jump | Scroll explicitly on the next frame with `scrollIntoView` (respects `scroll-padding-top`), then focus |
+| axe `region`: preview banner outside landmarks | `<div role="note">` | Labelled `<aside>` on all pages |
+| HTML: `target`/`rel` on a link without `href` | Hidden maps link | Attributes set by JS together with the `href` |
+| Story image "breaking" into the dark section was invisible | The illustration's dark ground blends into the dark section | Grid break removed; image sits within its section |
+| "Illustration" caption covered a dish on mobile | Placement | Moved to the lower right |
+| Featured placeholder tiles dominated the section | 4:5 tiles | Square tiles in the featured context |
+| Portuguese weekday names were lowercase | `Intl` output | First letter capitalized in the locale |
+| Banner text didn't line up with page content | Gutter-only padding | Padding aligns with `.container` at every width |
+
+### 4.3 Performance (home page, gzip)
+
+| Resource | Size | Budget (NFR-03) |
+|---|---|---|
+| HTML | 4.5 KB | — |
+| CSS | 17.1 KB | — |
+| JS (20 modules) | 19.3 KB | ≤ 50 KB |
+| Text total | 40.9 KB | ≤ 150 KB |
+| Images, first load at 1440 px | < 60 KB | — |
+| Fonts | 94 KB (unchanged) | ≤ 100 KB |
+
+---
+
+## 5. Content Needing the Owner's Approval
+
+All copy is in English, the working language.
+
+| Kind | Items |
+|---|---|
+| **Placeholders** (visibly marked) | Address, opening hours, WhatsApp, phone, maps link, tagline, prices |
+| **Draft slot** | The restaurant's story (*must be real; not written for them*) |
+| **Draft copy** (reasonable defaults; please confirm or rewrite) | Value proposition: "Sushi made with care, ordered in a few taps." · intro statement and paragraph ("built around the sushi counter… a short menu") · the four philosophy principles · benefit "Delivery or pickup" (depends on `{{FULFILMENT_MODES}}`) |
+| **True by design** (describe how the site works) | Order on WhatsApp · prices up front · nothing charged online · "the restaurant replies to confirm" |
+| **Demo data** | 7 dishes in `js/data/menu.js`, generic descriptions, all prices `null` |
+
+The preview notice on every page stays until `IS_DEMO_MENU` is `false` **and** every business fact in `config.js` is filled in.
+
+---
+
+## 6. Decisions and Deviations
+
+| # | Decision | Why |
+|---|---|---|
+| DV-1 | Original illustrations instead of stock photography | Honest (no other restaurant's food); the brief's image pipeline is still exercised and ready for real photos |
+| DV-2 | Separate portrait hero composition | Cropping the landscape version cut the dishes off on phones |
+| DV-3 | Featured cards link to the menu instead of "Add" | The cart arrives in a later phase. A button that does nothing would break the "no nonfunctional integrations" rule. |
+| DV-4 | No `Restaurant` JSON-LD yet | Structured data with missing address, phone and hours would be misleading. It will be generated once those facts exist (SEO phase). |
+| DV-5 | Business info is wired in `app.js` for **all** pages, not just home | The header panel and footer appear everywhere; one source of truth (BR-05) |
+| DV-6 | Grid break in the story section dropped | Didn't read with this illustration (see §4.2); revisit with real photography |
+| DV-7 | `tools/` folder with dev-only scripts (`illustrations.py`, `build-images.mjs`, `build-sprite.py`) | Reproducible assets; the site still has no build step and no runtime dependencies |
+
+---
+
+## 7. Known Gaps
+
+| # | Gap | Phase |
+|---|---|---|
+| G1 | All business facts and the story: owner input (§5) | Owner |
+| G2 | The menu page is still a shell; "View on menu" deep links (`?dish=`) will be handled there | Menu phase |
+| G3 | Cart button still hidden; no "Add" on cards | Cart phase |
+| G4 | Restaurant JSON-LD, Open Graph image, sitemap | SEO phase |
+| G5 | Hours are shown in 24-hour `HH:MM` for every locale | Fine for pt/es; revisit if another locale is chosen |
+| G6 | Chrome only; Firefox, Safari/iOS and real screen readers pending | QA phase |
+| G7 | `404.html` relative paths on nested URLs (carried over from Phase 05) | Deployment phase |
+
+---
+
+## 8. Commits (local)
+
+```
+chore: ignore node_modules symlinks
+feat(design): add hero and story illustrations with a responsive image pipeline
+feat(menu): add demo menu data, catalog validation and money formatting
+feat(hours): add opening-hours status in the restaurant's time zone
+feat(ui): render business info and hours from config on every page
+feat(home): build the home page sections
+test: cover catalog, money, hours and new contrast pairs
+docs: add phase 06 report
+```
+
+To apply the bundle on top of Phase 05:
+
+```
+git fetch funshi-phase06.bundle phase/06-website:phase/06-website
+```
+
+*End of Phase 06. Awaiting approval.*

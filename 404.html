@@ -1,0 +1,135 @@
+<!doctype html>
+<!-- lang: working language until {{SITE_LANGUAGE}} is confirmed (PRODUCT_BRIEF §11) -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <title>Page not found · Funshi Sushi</title>
+  <meta name="description" content="This page does not exist.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#240910">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <link rel="preload" href="assets/fonts/zen-kaku-gothic-new-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/shippori-mincho-b1-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components/button.css">
+  <link rel="stylesheet" href="css/components/badge.css">
+  <link rel="stylesheet" href="css/components/banner.css">
+  <link rel="stylesheet" href="css/components/header.css">
+  <link rel="stylesheet" href="css/components/footer.css">
+  <link rel="stylesheet" href="css/utilities.css">
+
+  <link rel="modulepreload" href="js/app.js">
+  <link rel="modulepreload" href="js/config.js">
+  <link rel="modulepreload" href="js/strings.js">
+  <link rel="modulepreload" href="js/core/features.js">
+  <link rel="modulepreload" href="js/ui/dom.js">
+  <link rel="modulepreload" href="js/ui/overlay.js">
+  <link rel="modulepreload" href="js/ui/header.js">
+  <link rel="modulepreload" href="js/data/menu.js">
+  <link rel="modulepreload" href="js/core/catalog.js">
+  <link rel="modulepreload" href="js/core/money.js">
+  <link rel="modulepreload" href="js/core/hours.js">
+  <link rel="modulepreload" href="js/ui/business-info.js">
+  <link rel="modulepreload" href="js/ui/hours-view.js">
+  <script type="module" src="js/pages/not-found.js"></script>
+</head>
+<body class="page surface-light">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <aside class="banner" aria-label="Error" data-app-error hidden>
+    <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#circle-alert"></use></svg>
+    <p data-field="message" role="alert"></p>
+  </aside>
+
+  <!-- shared:header:start — keep identical on every page except aria-current -->
+  <header class="site-header surface-dark" data-header>
+    <div class="site-header__inner container">
+      <a class="wordmark" href="index.html" aria-label="Funshi Sushi, home">
+        <span class="wordmark__name" aria-hidden="true">Funshi</span>
+        <span class="wordmark__sub" aria-hidden="true">Sushi</span>
+      </a>
+      <nav class="site-nav" id="site-nav" aria-label="Main" data-nav>
+        <ul class="site-nav__list" role="list">
+          <li><a class="site-nav__link" href="menu.html">Menu</a></li>
+          <li><a class="site-nav__link" href="index.html#story">Our story</a></li>
+          <li><a class="site-nav__link" href="index.html#visit">Visit us</a></li>
+        </ul>
+        <div class="site-nav__extra">
+          <p class="text-muted" data-business="address-inline"><span class="placeholder">Address to be confirmed</span></p>
+          <a class="button button--secondary" href="index.html#visit"><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#map-pin"></use></svg>Location and hours</a>
+        </div>
+      </nav>
+      <div class="site-header__actions">
+        <!-- Cart button: enabled in the cart phase -->
+        <button class="button button--icon cart-button" type="button" data-cart-open aria-label="Cart, 0 items" hidden>
+          <svg class="icon icon--lg" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#shopping-bag"></use></svg>
+          <span class="badge badge--count" data-cart-count data-count="0">0</span>
+        </button>
+        <button class="button button--icon site-header__toggle" type="button" data-nav-toggle aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+          <svg class="icon icon--lg icon-open" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#menu"></use></svg>
+          <svg class="icon icon--lg icon-close" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#x"></use></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <!-- shared:header:end -->
+
+  <main id="main" tabindex="-1" data-inert-on-overlay>
+    <section class="section">
+      <div class="container">
+        <div class="stack stack--5">
+          <h1>This page isn’t on the menu</h1>
+          <p class="t-lead">The link may be old, or the address may have a typo.</p>
+          <div class="cluster">
+            <a class="button button--primary" href="menu.html">See the menu</a>
+            <a class="button button--secondary" href="index.html">Go to home</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- shared:footer:start — keep identical on every page -->
+  <footer class="site-footer surface-dark" data-inert-on-overlay>
+    <div class="container">
+      <div class="site-footer__columns">
+        <div class="stack stack--3">
+          <a class="wordmark" href="index.html" aria-label="Funshi Sushi, home">
+            <span class="wordmark__name" aria-hidden="true">Funshi</span>
+            <span class="wordmark__sub" aria-hidden="true">Sushi</span>
+          </a>
+          <p class="text-muted"><span class="placeholder">Tagline to be confirmed</span></p>
+        </div>
+        <div>
+          <h2 class="site-footer__heading">Visit us</h2>
+          <div class="stack stack--2">
+            <p data-business="address-inline"><span class="placeholder">Address to be confirmed</span></p>
+            <p data-hours-summary><span class="placeholder">Opening hours to be confirmed</span></p>
+            <p><a href="index.html#visit">Location and hours</a></p>
+          </div>
+        </div>
+        <div>
+          <h2 class="site-footer__heading">Order</h2>
+          <ul class="site-footer__list" role="list">
+            <li><a href="menu.html"><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#chevron-right"></use></svg>See the menu</a></li>
+            <li data-business="whatsapp-item"><span class="placeholder">WhatsApp number to be confirmed</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="site-footer__legal">
+        <p>© 2026 Funshi Sushi</p>
+        <p>Icons by Lucide (ISC). Typefaces: Shippori Mincho B1 and Zen Kaku Gothic New (SIL OFL).</p>
+      </div>
+    </div>
+  </footer>
+  <!-- shared:footer:end -->
+
+  <div class="visually-hidden" aria-live="polite" data-announcer></div>
+</body>
+</html>

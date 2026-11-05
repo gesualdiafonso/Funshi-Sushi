@@ -1,0 +1,155 @@
+/* ==========================================================================
+   Dish card + typographic tile
+   Used for featured dishes (home). The main menu uses printed-menu lines
+   (menu.css, later phase) — cards are the image-led alternative.
+
+   Deliberately not a "box": no background panel, no shadow, no border.
+   The image (or tile) carries the card; text sits on the page surface.
+
+   <article class="dish-card">          (container — styles nothing itself)
+    <div class="dish-card__inner">       (the grid that responds to it)
+     <div class="dish-card__media"> <img …> | <div class="tile">…</div> </div>
+     <div class="dish-card__body">
+       <h3 class="dish-card__title">…</h3>
+       <p class="dish-card__desc">…</p>
+       <p class="dish-card__meta">…badges…</p>
+     </div>
+     <div class="dish-card__footer">
+       <p class="dish-card__price t-price">…</p>
+       <button class="button button--primary button--compact">Add</button>
+     </div>
+    </div>
+   </article>
+
+   Container query: the card switches to a horizontal layout when its own
+   width allows it, whatever the viewport.
+   ========================================================================== */
+
+@layer components {
+  .dish-card {
+    container-type: inline-size;
+    container-name: dish-card;
+    height: 100%;
+  }
+
+  /* The body row absorbs extra height, so footers (price + Add) line up
+     across a row of cards even when titles wrap. */
+  .dish-card__inner {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "media"
+      "body"
+      "footer";
+    gap: var(--space-3);
+    height: 100%;
+  }
+
+  .dish-card__media {
+    grid-area: media;
+    overflow: hidden;
+    border-radius: var(--radius-cut);
+    aspect-ratio: 4 / 5;
+    background-color: var(--surface-inset);
+  }
+
+  .dish-card__media > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .dish-card__body {
+    grid-area: body;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .dish-card__title {
+    font-size: var(--text-h3);
+  }
+
+  .dish-card__desc {
+    color: var(--text-muted);
+    font-size: var(--text-small);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .dish-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    margin-block-start: var(--space-1);
+    color: var(--text-muted);
+    font-size: var(--text-small);
+  }
+
+  .dish-card__footer {
+    grid-area: footer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+
+  /* Wide card: media beside the text. */
+  @container dish-card (min-width: 30rem) {
+    .dish-card__inner {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      grid-template-rows: 1fr auto;
+      grid-template-areas:
+        "media body"
+        "media footer";
+      column-gap: var(--space-5);
+    }
+
+    .dish-card__media {
+      aspect-ratio: 1;
+    }
+  }
+
+  /* ---- Typographic tile: placeholder when no real photo exists ----------
+     (BRAND_GUIDELINES §6.3 — never a stock photo of someone else's food.)
+     Decorative (aria-hidden). In a card, the tile shows the *category*
+     ("Nigiri") because the dish name is already the card heading right
+     below it; where no heading follows, it can show the dish name. */
+  .tile {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+    height: 100%;
+    padding: var(--space-4);
+    background-color: var(--tile-bg);
+    color: var(--tile-fg);
+    overflow: hidden;
+  }
+
+  /* The "cut": one precise diagonal hairline, leaning away from the text
+     corner (bottom-left) so it never crosses the label. */
+  .tile::before {
+    content: "";
+    position: absolute;
+    inset: -50% auto auto 58%;
+    width: var(--border-width);
+    height: 200%;
+    background-color: currentColor;
+    opacity: 0.35;
+    rotate: -28deg;
+  }
+
+  .tile__name {
+    position: relative;
+    max-width: 12ch;
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 8cqi, 2rem);
+    font-weight: 500;
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+}

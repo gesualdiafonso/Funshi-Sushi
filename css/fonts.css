@@ -1,0 +1,39 @@
+/*
+ * Funshi Sushi — self-hosted web fonts (Latin subset).
+ * Both families are licensed under the SIL Open Font License 1.1
+ * (see assets/fonts/OFL-*.txt). Latin subset includes the accented
+ * characters needed for Spanish and Portuguese (á é í ó ú ñ ç ã õ ¡ ¿).
+ * Total payload: ~68 KB for all four files.
+ */
+
+@font-face {
+  font-family: "Shippori Mincho B1";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../assets/fonts/shippori-mincho-b1-latin-700-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Zen Kaku Gothic New";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/zen-kaku-gothic-new-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Zen Kaku Gothic New";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../assets/fonts/zen-kaku-gothic-new-latin-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Zen Kaku Gothic New";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../assets/fonts/zen-kaku-gothic-new-latin-700-normal.woff2") format("woff2");
+}

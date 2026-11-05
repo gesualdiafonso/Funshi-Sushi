@@ -1,0 +1,48 @@
+/* ==========================================================================
+   Featured dishes — a scroll-snap row on small screens, 4 columns from 64rem.
+   Cards: card.css. Header row: .section-head (layout.css).
+   ========================================================================== */
+
+@layer components {
+  .featured__list {
+    --scroller-item: min(78%, 17rem);
+    gap: var(--space-5);
+  }
+
+  @media (min-width: 40rem) {
+    .featured__list {
+      --scroller-item: min(42%, 18rem);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .featured__list {
+      grid-auto-flow: row;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-inline: 0;
+      padding-inline: 0;
+      overflow: visible;
+      gap: var(--grid-gap);
+    }
+  }
+
+  .featured .dish-card__media {
+    aspect-ratio: 1;
+  }
+
+  .dish-card__price[data-unpriced] {
+    color: var(--text-muted);
+    font-weight: 400;
+    font-size: var(--text-small);
+    white-space: normal;
+  }
+
+  .dish-card__media :is(picture, img) {
+    width: 100%;
+    height: 100%;
+  }
+
+  .dish-card__media img {
+    object-fit: cover;
+  }
+}
