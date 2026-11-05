@@ -21,6 +21,18 @@
     }
   }
 
+  /* Lazy dish images (js/ui/picture.js) appear once loaded, over the
+     media box's inset color; a short fade unless motion is reduced. */
+  img[data-loading] {
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    img {
+      transition: opacity var(--dur-base) var(--ease-out);
+    }
+  }
+
   body {
     background-color: var(--surface);
     color: var(--text);
@@ -189,7 +201,8 @@
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
-  *::after {
+  *::after,
+  ::backdrop {
     animation-duration: 1ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 1ms !important;

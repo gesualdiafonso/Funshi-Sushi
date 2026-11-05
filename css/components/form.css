@@ -1,0 +1,218 @@
+/* ==========================================================================
+   Form fields — label, input/textarea, hint. The checkout phase extends this
+   (errors, choice cards, error summary). BRAND_GUIDELINES §9.2
+   ========================================================================== */
+
+@layer components {
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .field__label {
+    font-size: var(--text-small);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .field__optional {
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  .field__input {
+    width: 100%;
+    min-height: 3rem;
+    padding: var(--space-2) var(--space-3);
+    border: var(--border-width) solid var(--border-control);
+    border-radius: var(--radius-control);
+    background-color: var(--color-shari);
+    color: var(--color-urushi);
+    font-size: var(--text-body); /* ≥16px: no zoom-on-focus on iOS */
+    line-height: 1.5;
+  }
+
+  textarea.field__input {
+    min-height: 4.5rem;
+  }
+
+  .field__hint {
+    color: var(--text-muted);
+    font-size: var(--text-small);
+  }
+}
+
+/* ---- Errors (icon + text, never color alone) — BRAND_GUIDELINES §3.3 ------ */
+@layer components {
+  .field__input[aria-invalid="true"] {
+    border-width: var(--border-width-strong);
+    border-color: var(--error);
+  }
+
+  .field__error {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    color: var(--error);
+    font-size: var(--text-small);
+    font-weight: 500;
+  }
+
+  .field__error .icon {
+    margin-block-start: 0.15rem;
+  }
+
+  /* ---- Checkbox / radio row --------------------------------------------- */
+  .checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: var(--tap-target);
+    cursor: pointer;
+  }
+
+  .checkbox input {
+    flex: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin: 0;
+    accent-color: var(--color-akami);
+  }
+
+  .checkbox input[aria-invalid="true"] {
+    outline: 2px solid var(--error);
+    outline-offset: 2px;
+  }
+
+  .choice-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-6);
+  }
+
+  /* ---- Choice cards: large radios (delivery / pickup) ---------------------- */
+  .choice-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr));
+    gap: var(--space-3);
+  }
+
+  .choice-card {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border: var(--border-width) solid var(--border-control);
+    border-radius: var(--radius-control);
+    background-color: var(--color-shari);
+    cursor: pointer;
+  }
+
+  /* The real radio stays in the accessibility tree; the card shows its state. */
+  .choice-card input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .choice-card:has(input:focus-visible) {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 3px;
+  }
+
+  .choice-card:has(input:checked) {
+    border: var(--border-width-strong) solid var(--color-akami);
+    padding: calc(var(--space-4) - 1px);
+  }
+
+  .choice-card:has(input[aria-invalid="true"]) {
+    border-color: var(--error);
+  }
+
+  .choice-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .choice-card__title {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-weight: 700;
+  }
+
+  .choice-card__meta {
+    color: var(--text-muted);
+    font-size: var(--text-small);
+  }
+
+  .choice-card__check {
+    display: none;
+    margin-inline-start: auto;
+    color: var(--color-akami);
+  }
+
+  .choice-card:has(input:checked) .choice-card__check {
+    display: block;
+  }
+
+  @media (forced-colors: active) {
+    .choice-card:has(input:checked) {
+      border-color: Highlight;
+    }
+
+    .choice-card__check {
+      color: CanvasText;
+    }
+  }
+
+  /* ---- Error summary --------------------------------------------------------- */
+  .error-summary {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    border: var(--border-width-strong) solid var(--error);
+    border-radius: var(--radius-cut);
+  }
+
+  .error-summary:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 3px;
+  }
+
+  .error-summary__title {
+    font-family: var(--font-body);
+    font-size: var(--text-h4);
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .error-summary__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    margin: 0;
+    padding-inline-start: var(--space-5);
+  }
+
+  .error-summary__list a {
+    color: var(--error);
+    font-weight: 500;
+  }
+
+  /* Inline text button (e.g. "Forget my details" inside a sentence). */
+  .button--inline {
+    min-height: 0;
+    padding: 0;
+    font-size: inherit;
+    vertical-align: baseline;
+  }
+}

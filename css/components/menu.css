@@ -24,6 +24,27 @@
     border-block-end: var(--border-width) solid var(--line);
   }
 
+  /* On mobile the category bar sticks under the header: focused dishes
+     must scroll clear of both (WCAG 2.4.11). */
+  @media (max-width: 63.999rem) {
+    html:has(.menu-layout__rail) {
+      scroll-padding-block-start: calc(var(--header-height) + 4.5rem + var(--space-3));
+    }
+  }
+
+  /* Short screens — landscape phones, or text zoomed to 400 % (WCAG 1.4.10):
+     a sticky category bar would leave little room for the menu itself, so
+     it scrolls with the page. Only the header stays (see cart.css too). */
+  @media (max-width: 63.999rem) and (max-height: 30rem) {
+    .menu-layout__rail {
+      position: static;
+    }
+
+    html:has(.menu-layout__rail) {
+      scroll-padding-block-start: calc(var(--header-height) + var(--space-4));
+    }
+  }
+
   .menu-categories {
     display: flex;
     gap: var(--space-2);
@@ -272,6 +293,19 @@
     }
   }
 
+  /* A slight lift of the dish photo on hover: the line is clickable. */
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .menu-item__media img {
+      transition:
+        opacity var(--dur-base) var(--ease-out),
+        scale var(--dur-slow) var(--ease-out);
+    }
+
+    .menu-item__inner:hover .menu-item__media img {
+      scale: 1.04;
+    }
+  }
+
   .menu-item__leader {
     flex: 1 1 1.5rem;
     min-width: 1rem;
@@ -289,14 +323,29 @@
     line-height: 1.5;
   }
 
+  .menu-item__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-3);
+    margin-block-start: var(--space-1);
+  }
+
   .menu-item__meta {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: var(--space-2);
-    margin-block-start: var(--space-1);
     color: var(--text-muted);
     font-size: var(--text-small);
+  }
+
+  /* Above the line's full-size open button (its ::after covers the line). */
+  .menu-item__action {
+    position: relative;
+    z-index: 1;
+    margin-inline-start: auto;
   }
 
   [data-unpriced] {

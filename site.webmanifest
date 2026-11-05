@@ -1,0 +1,15 @@
+{
+  "name": "Funshi Sushi",
+  "short_name": "Funshi",
+  "description": "Japanese restaurant: menu and ordering by WhatsApp.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "browser",
+  "background_color": "#F2EEE8",
+  "theme_color": "#240910",
+  "icons": [
+    { "src": "assets/brand/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/brand/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "assets/brand/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

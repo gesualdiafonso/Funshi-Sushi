@@ -24,7 +24,27 @@
     -webkit-tap-highlight-color: transparent;
     transition:
       background-color var(--dur-fast) var(--ease-out),
-      color var(--dur-fast) var(--ease-out);
+      border-color var(--dur-fast) var(--ease-out),
+      color var(--dur-fast) var(--ease-out),
+      translate var(--dur-fast) var(--ease-out);
+  }
+
+  .chip:active {
+    translate: 0 1px;
+  }
+
+  /* Windows high contrast and other forced-color modes drop background
+     colors, which is how the selected category shows. Use the system's
+     "selected" colors instead. */
+  @media (forced-colors: active) {
+    .chip[aria-pressed="true"],
+    .chip[aria-current="true"],
+    .chip[aria-current="page"] {
+      forced-color-adjust: none;
+      border-color: SelectedItem;
+      background-color: SelectedItem;
+      color: SelectedItemText;
+    }
   }
 
   .chip[aria-pressed="true"],

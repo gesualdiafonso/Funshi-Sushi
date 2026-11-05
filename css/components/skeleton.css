@@ -1,0 +1,195 @@
+/* ==========================================================================
+   Skeleton — placeholder shapes while a page's scripts build its content.
+
+   The menu and the checkout render their content with JavaScript. Without a
+   placeholder the footer jumps down when they appear (layout shift). The
+   skeleton holds roughly the same space, then disappears as soon as startup
+   finishes or fails (`<html data-app>` is set either way).
+
+   - Only shown when scripting is on (without JS the <noscript> text shows).
+   - Decorative: the shapes are aria-hidden; a visually hidden line says
+     what is loading.
+   - The pulse is slow and low-contrast, starts after a short delay (fast
+     loads never see it move) and is off with reduced motion.
+   - If the scripts never run (a network error), a message replaces the
+     pulse after a few seconds instead of loading forever.
+   ========================================================================== */
+
+@layer components {
+  .skeleton {
+    display: none;
+  }
+
+  @media (scripting: enabled) {
+    :root:not([data-app]) .skeleton {
+      position: relative;
+      display: block;
+    }
+  }
+
+  .skeleton__shape {
+    display: block;
+    block-size: 1rem;
+    border-radius: var(--radius-control);
+    background-color: var(--color-shari-deep);
+  }
+
+  .skeleton__shape--pill {
+    block-size: 2.75rem;
+    border-radius: var(--radius-pill);
+  }
+
+  .skeleton__shape--field {
+    block-size: 3rem;
+    max-inline-size: 28rem;
+  }
+
+  .skeleton__shape--title {
+    block-size: 1.75rem;
+    inline-size: 40%;
+  }
+
+  .skeleton__shape--image {
+    block-size: 5.5rem;
+    inline-size: 5.5rem;
+  }
+
+  .skeleton__shape--block {
+    block-size: 14rem;
+  }
+
+  .skeleton__row {
+    display: flex;
+    gap: var(--space-2);
+    overflow: hidden;
+  }
+
+  .skeleton__row > * {
+    flex: none;
+  }
+
+  .skeleton__line {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    gap: var(--space-4);
+    padding-block: var(--space-5);
+    border-block-end: var(--border-width) solid var(--line);
+  }
+
+  .skeleton__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding-block-start: var(--space-2);
+  }
+
+  /* Widths vary so the shapes read as text, not as a grid of bars. */
+  .skeleton__w-1 { inline-size: 4.5rem; }
+  .skeleton__w-2 { inline-size: 6rem; }
+  .skeleton__w-3 { inline-size: 5.25rem; }
+  .skeleton__w-60 { inline-size: 60%; }
+  .skeleton__w-80 { inline-size: 80%; }
+  .skeleton__w-45 { inline-size: 45%; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .skeleton__shape {
+      animation: skeleton-pulse 1.6s ease-in-out 400ms infinite alternate;
+    }
+  }
+
+  @keyframes skeleton-pulse {
+    to {
+      opacity: 0.45;
+    }
+  }
+
+  /* Shown only if the page is still loading after 8 s. Laid over the
+     shapes so it takes no space (and causes no shift) when it appears. */
+  .skeleton__slow {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 1;
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-control);
+    background-color: var(--surface);
+    box-shadow: var(--shadow-raised);
+    visibility: hidden;
+    animation: skeleton-slow 1ms 8s forwards;
+  }
+
+  @keyframes skeleton-slow {
+    to {
+      visibility: visible;
+    }
+  }
+
+  /* ---- Menu: category chips, search, two sections of lines -------------- */
+  .menu-skeleton {
+    /* Taller than the first screen, so the footer stays out of view until
+       the real menu (much longer) replaces it. */
+    min-block-size: 100svh;
+  }
+
+  .menu-skeleton__main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    padding-block-start: var(--space-5);
+  }
+
+  @media (min-width: 64rem) {
+    .menu-skeleton__layout {
+      display: grid;
+      grid-template-columns: 12rem minmax(0, 1fr);
+      gap: var(--space-8);
+    }
+
+    .menu-skeleton__layout .skeleton__row {
+      flex-direction: column;
+    }
+
+    /* The rail is a list of labels, not filled chips. */
+    .menu-skeleton__layout .skeleton__shape--pill {
+      block-size: 1rem;
+      margin: 0.875rem var(--space-3);
+      border-radius: var(--radius-control);
+    }
+
+    .menu-skeleton__layout .skeleton__row {
+      gap: var(--space-1);
+    }
+
+    .menu-skeleton__main {
+      padding-block-start: 0;
+    }
+  }
+
+  @media (min-width: 40rem) {
+    .skeleton__line {
+      grid-template-columns: 7.5rem minmax(0, 1fr);
+      gap: var(--space-5);
+    }
+
+    .skeleton__shape--image {
+      block-size: 7.5rem;
+      inline-size: 7.5rem;
+    }
+  }
+
+  /* ---- Checkout: order list + summary ------------------------------------ */
+  .checkout-skeleton {
+    min-block-size: 70svh;
+  }
+
+  .checkout-skeleton__layout {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 64rem) {
+    .checkout-skeleton__layout {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+      gap: var(--space-8);
+    }
+  }
+}

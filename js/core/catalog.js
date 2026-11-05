@@ -202,3 +202,28 @@ export function pieceRange(product) {
 export function featuredProducts(catalog, limit = 6) {
   return catalog.products.filter((product) => product.featured && product.available).slice(0, limit);
 }
+
+/**
+ * Can this dish (and size) be ordered right now?
+ * @param {Product | undefined} product
+ * @param {string | null} variantId
+ * @returns {{ ok: true, variant: Variant | null } | { ok: false, reason: string }}
+ *   reason: 'unknown-product' | 'unavailable' | 'variant-required' | 'unknown-variant' | 'unpriced'
+ */
+export function checkOrderable(product, variantId) {
+  if (!product) return { ok: false, reason: 'unknown-product' };
+  if (!product.available) return { ok: false, reason: 'unavailable' };
+  let variant = null;
+  if (Array.isArray(product.variants)) {
+    if (variantId === null || variantId === undefined) return { ok: false, reason: 'variant-required' };
+    variant = product.variants.find((v) => v.id === variantId) ?? null;
+    if (!variant) return { ok: false, reason: 'unknown-variant' };
+    if (!isValidPrice(variant.price)) return { ok: false, reason: 'unpriced' };
+  } else {
+    if (variantId !== null && variantId !== undefined) return { ok: false, reason: 'unknown-variant' };
+    if (!isValidPrice(product.price)) return { ok: false, reason: 'unpriced' };
+  }
+  return { ok: true, variant };
+}
+
+export const isValidPrice = (price) => Number.isSafeInteger(price) && price >= 0;

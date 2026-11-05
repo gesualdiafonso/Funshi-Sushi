@@ -9,6 +9,7 @@ import { join } from 'node:path';
 
 const root = new URL('..', import.meta.url).pathname;
 const PAGES = ['index.html', 'menu.html', 'checkout.html', '404.html'];
+const CART_PAGES = ['index.html', 'menu.html', '404.html'];
 const read = (file) => readFileSync(join(root, file), 'utf8');
 
 function block(html, name) {
@@ -28,6 +29,20 @@ for (const name of ['header', 'footer']) {
     }
   });
 }
+
+test('shared cart block (drawer, line template, cart bar) is identical on every page that has it', () => {
+  const reference = block(read(CART_PAGES[0]), 'cart');
+  assert.ok(reference, 'index.html has no shared:cart block');
+  for (const page of CART_PAGES.slice(1)) assert.equal(block(read(page), 'cart'), reference, `${page} cart block differs`);
+  assert.ok(!block(read('checkout.html'), 'cart'), 'checkout shows the order inline, not in a drawer');
+});
+
+test('the preview notice is on every page, identical', () => {
+  const notice = (html) => html.match(/<aside class="banner" aria-label="Preview notice"[\s\S]*?<\/aside>/)?.[0];
+  const reference = notice(read('index.html'));
+  assert.ok(reference);
+  for (const page of [...PAGES, 'styleguide.html']) assert.equal(notice(read(page)), reference, page);
+});
 
 test('every page has one <h1>, a skip link, a #main landmark and a lang attribute', () => {
   for (const page of [...PAGES, 'styleguide.html']) {
@@ -80,8 +95,8 @@ test('no innerHTML / outerHTML / insertAdjacentHTML / document.write in site cod
   }
 });
 
-test('core modules stay DOM-free (testable in Node)', () => {
-  for (const file of jsFiles('js/core')) {
+test('core modules and the cart model stay DOM-free (testable in Node)', () => {
+  for (const file of [...jsFiles('js/core'), 'js/cart/cart-model.js']) {
     assert.doesNotMatch(read(file), /\b(document|window|localStorage|navigator)\b/, file);
   }
 });

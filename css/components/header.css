@@ -193,6 +193,20 @@
       animation: nav-in var(--dur-base) var(--ease-out);
     }
 
+    /* Exit: fade out while still displayed. */
+    @media (prefers-reduced-motion: no-preference) {
+      .site-nav {
+        transition:
+          display var(--dur-fast) allow-discrete,
+          opacity var(--dur-fast) var(--ease-in);
+      }
+
+      .site-nav:not([data-open]) {
+        opacity: 0;
+        pointer-events: none;
+      }
+    }
+
     .site-nav__list {
       flex-direction: column;
       gap: var(--space-1);

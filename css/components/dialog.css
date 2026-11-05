@@ -86,6 +86,44 @@
     }
   }
 
+  /* Exit: the dialog stays rendered (display/overlay allow-discrete) while
+     the panel slides back and the backdrop fades — faster than the entry.
+     Browsers without these features simply close at once. */
+  @media (prefers-reduced-motion: no-preference) {
+    .modal,
+    .modal::backdrop {
+      transition:
+        display var(--dur-fast) allow-discrete,
+        overlay var(--dur-fast) allow-discrete,
+        opacity var(--dur-fast) var(--ease-in);
+    }
+
+    .modal__panel {
+      transition:
+        translate var(--dur-fast) var(--ease-in),
+        opacity var(--dur-fast) var(--ease-in);
+    }
+
+    .modal:not([open]) {
+      pointer-events: none;
+    }
+
+    .modal:not([open])::backdrop {
+      opacity: 0;
+    }
+
+    .modal:not([open]) .modal__panel {
+      translate: 0 100%;
+    }
+
+    @media (min-width: 40rem) {
+      .modal:not([open]) .modal__panel {
+        translate: 0 8px;
+        opacity: 0;
+      }
+    }
+  }
+
   @keyframes modal-sheet-in {
     from {
       translate: 0 100%;

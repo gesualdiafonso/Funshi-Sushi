@@ -84,7 +84,9 @@ export function initMenuFilters(catalog, view, root) {
     for (const [id, section] of view.sections) section.hidden = !visibleSections.has(id);
 
     for (const button of el.categories.querySelectorAll('[data-category]')) {
-      button.setAttribute('aria-pressed', String((button.dataset.category || null) === state.category));
+      const pressed = (button.dataset.category || null) === state.category;
+      button.setAttribute('aria-pressed', String(pressed));
+      if (pressed) revealChip(button, { smooth: updateUrl });
     }
     for (const button of el.tags.querySelectorAll('[data-tag]')) {
       button.setAttribute('aria-pressed', String(state.tags.includes(button.dataset.tag)));
@@ -158,9 +160,29 @@ export function initMenuFilters(catalog, view, root) {
     }));
   }
 
+  /**
+   * On phones the chips scroll sideways: keep the selected one fully in view
+   * (e.g. after following a link to ?category=drinks). Scrolls the row only,
+   * never the page.
+   */
+  function revealChip(chip, { smooth }) {
+    const row = el.categories;
+    if (row.scrollWidth <= row.clientWidth) return;
+    const rowBox = row.getBoundingClientRect();
+    const box = chip.getBoundingClientRect();
+    const pad = 24; // clear of the faded trailing edge
+    let left = row.scrollLeft;
+    if (box.left < rowBox.left) left -= rowBox.left - box.left + pad;
+    else if (box.right > rowBox.right - pad) left += box.right - rowBox.right + pad * 2;
+    else return;
+    const motion = smooth && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    row.scrollTo({ left, behavior: motion ? 'smooth' : 'instant' });
+  }
+
   /** After switching category the list shrinks; keep its start in view. */
   function bringResultsIntoView() {
     const top = el.status.getBoundingClientRect().top;
-    if (top < 0) el.status.scrollIntoView({ block: 'start' });
+    // Jump, don't glide: the content under the viewport was just replaced.
+    if (top < 0) el.status.scrollIntoView({ block: 'start', behavior: 'instant' });
   }
 }

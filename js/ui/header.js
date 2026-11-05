@@ -10,11 +10,29 @@ import { delegate, on, qs } from './dom.js';
 const WIDE_SCREEN = '(min-width: 64rem)';
 
 export function initHeader() {
+  initSkipLink();
   const header = qs('[data-header]');
   if (!header) return;
 
   initScrolledState(header);
   initMobileNav(header);
+}
+
+/**
+ * The skip link moves focus without changing the address. Without JS it is a
+ * plain #main link. With JS this avoids two problems with a leftover #main:
+ * going back after closing an overlay would refocus <main>, and the 404
+ * page's <base> (tools/build-seo.mjs) would point #main at the home page.
+ */
+function initSkipLink() {
+  const link = document.querySelector('.skip-link[href="#main"]');
+  const main = document.getElementById('main');
+  if (!link || !main) return;
+  link.addEventListener('click', (event) => {
+    event.preventDefault();
+    main.focus();
+    main.scrollIntoView({ block: 'start', behavior: 'instant' });
+  });
 }
 
 /** Mark the header as scrolled once the page moves past the top (shadow, solid bg). */

@@ -9,7 +9,10 @@
   <meta name="description" content="This page does not exist.">
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#240910">
+  <link rel="icon" href="favicon.ico" sizes="32x32">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
 
   <link rel="preload" href="assets/fonts/zen-kaku-gothic-new-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/shippori-mincho-b1-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -22,6 +25,11 @@
   <link rel="stylesheet" href="css/components/banner.css">
   <link rel="stylesheet" href="css/components/header.css">
   <link rel="stylesheet" href="css/components/footer.css">
+  <link rel="stylesheet" href="css/components/chip.css">
+  <link rel="stylesheet" href="css/components/form.css">
+  <link rel="stylesheet" href="css/components/cart.css">
+  <link rel="stylesheet" href="css/components/drawer.css">
+  <link rel="stylesheet" href="css/components/toast.css">
   <link rel="stylesheet" href="css/utilities.css">
 
   <link rel="modulepreload" href="js/app.js">
@@ -30,6 +38,7 @@
   <link rel="modulepreload" href="js/core/features.js">
   <link rel="modulepreload" href="js/ui/dom.js">
   <link rel="modulepreload" href="js/ui/overlay.js">
+  <link rel="modulepreload" href="js/ui/focus-clear.js">
   <link rel="modulepreload" href="js/ui/header.js">
   <link rel="modulepreload" href="js/data/menu.js">
   <link rel="modulepreload" href="js/core/catalog.js">
@@ -37,10 +46,28 @@
   <link rel="modulepreload" href="js/core/hours.js">
   <link rel="modulepreload" href="js/ui/business-info.js">
   <link rel="modulepreload" href="js/ui/hours-view.js">
+  <link rel="modulepreload" href="js/services/storage.js">
+  <link rel="modulepreload" href="js/cart/cart-model.js">
+  <link rel="modulepreload" href="js/core/pricing.js">
+  <link rel="modulepreload" href="js/cart/cart-store.js">
+  <link rel="modulepreload" href="js/ui/announcer.js">
+  <link rel="modulepreload" href="js/ui/toast.js">
+  <link rel="modulepreload" href="js/ui/cart-messages.js">
+  <link rel="modulepreload" href="js/ui/picture.js">
+  <link rel="modulepreload" href="js/ui/product-info.js">
+  <link rel="modulepreload" href="js/ui/cart-view.js">
+  <link rel="modulepreload" href="js/ui/cart-drawer.js">
+  <link rel="modulepreload" href="js/ui/cart-indicators.js">
+  <link rel="modulepreload" href="js/ui/add-to-cart.js">
   <script type="module" src="js/pages/not-found.js"></script>
 </head>
 <body class="page surface-light">
   <a class="skip-link" href="#main">Skip to content</a>
+
+  <aside class="banner" aria-label="Preview notice" data-preview-notice>
+    <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#info"></use></svg>
+    <p>Preview: dishes, prices, the restaurant’s story and its contact details are placeholders until the restaurant confirms them.</p>
+  </aside>
 
   <aside class="banner" aria-label="Error" data-app-error hidden>
     <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#circle-alert"></use></svg>
@@ -50,19 +77,19 @@
   <!-- shared:header:start — keep identical on every page except aria-current -->
   <header class="site-header surface-dark" data-header>
     <div class="site-header__inner container">
-      <a class="wordmark" href="index.html" aria-label="Funshi Sushi, home">
+      <a class="wordmark" href="./" aria-label="Funshi Sushi, home">
         <span class="wordmark__name" aria-hidden="true">Funshi</span>
         <span class="wordmark__sub" aria-hidden="true">Sushi</span>
       </a>
       <nav class="site-nav" id="site-nav" aria-label="Main" data-nav>
         <ul class="site-nav__list" role="list">
           <li><a class="site-nav__link" href="menu.html">Menu</a></li>
-          <li><a class="site-nav__link" href="index.html#story">Our story</a></li>
-          <li><a class="site-nav__link" href="index.html#visit">Visit us</a></li>
+          <li><a class="site-nav__link" href="./#story">Our story</a></li>
+          <li><a class="site-nav__link" href="./#visit">Visit us</a></li>
         </ul>
         <div class="site-nav__extra">
           <p class="text-muted" data-business="address-inline"><span class="placeholder">Address to be confirmed</span></p>
-          <a class="button button--secondary" href="index.html#visit"><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#map-pin"></use></svg>Location and hours</a>
+          <a class="button button--secondary" href="./#visit"><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#map-pin"></use></svg>Location and hours</a>
         </div>
       </nav>
       <div class="site-header__actions">
@@ -88,7 +115,7 @@
           <p class="t-lead">The link may be old, or the address may have a typo.</p>
           <div class="cluster">
             <a class="button button--primary" href="menu.html">See the menu</a>
-            <a class="button button--secondary" href="index.html">Go to home</a>
+            <a class="button button--secondary" href="./">Go to home</a>
           </div>
         </div>
       </div>
@@ -100,7 +127,7 @@
     <div class="container">
       <div class="site-footer__columns">
         <div class="stack stack--3">
-          <a class="wordmark" href="index.html" aria-label="Funshi Sushi, home">
+          <a class="wordmark" href="./" aria-label="Funshi Sushi, home">
             <span class="wordmark__name" aria-hidden="true">Funshi</span>
             <span class="wordmark__sub" aria-hidden="true">Sushi</span>
           </a>
@@ -111,7 +138,7 @@
           <div class="stack stack--2">
             <p data-business="address-inline"><span class="placeholder">Address to be confirmed</span></p>
             <p data-hours-summary><span class="placeholder">Opening hours to be confirmed</span></p>
-            <p><a href="index.html#visit">Location and hours</a></p>
+            <p><a href="./#visit">Location and hours</a></p>
           </div>
         </div>
         <div>
@@ -130,6 +157,75 @@
   </footer>
   <!-- shared:footer:end -->
 
+  <!-- shared:cart:start — keep identical on every page with a cart drawer -->
+  <dialog class="drawer surface-light" id="cart-drawer" aria-labelledby="cart-title" data-cart-drawer>
+    <div class="drawer__panel">
+      <div class="drawer__header">
+        <h2 class="drawer__title" id="cart-title" tabindex="-1" data-cart-focus>Your order</h2>
+        <button class="button button--icon" type="button" data-overlay-close aria-label="Close"><svg class="icon icon--lg" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#x"></use></svg></button>
+      </div>
+      <section class="drawer__body" tabindex="0" aria-label="Dishes in your order">
+        <p class="notice" data-storage-notice hidden><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#info"></use></svg>Your browser isn’t saving data for this site, so this order will be lost if you close the page.</p>
+        <ul class="cart-lines" role="list" data-cart-lines></ul>
+        <div class="cart-empty" data-cart-empty hidden>
+          <svg class="icon empty-icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#shopping-bag"></use></svg>
+          <p class="cart-empty__title">Your order is empty.</p>
+          <p>Add dishes from the menu and they’ll appear here.</p>
+          <a class="button button--primary" href="menu.html">See the menu</a>
+        </div>
+        <div class="field" data-cart-note-field>
+          <label class="field__label" for="cart-note">Note for the restaurant <span class="field__optional">(optional)</span></label>
+          <textarea class="field__input" id="cart-note" rows="2" aria-describedby="cart-note-count" data-cart-note></textarea>
+          <p class="field__hint" id="cart-note-count" data-cart-note-count hidden></p>
+        </div>
+      </section>
+      <div class="drawer__footer" data-cart-summary>
+        <dl class="cart-totals">
+          <div class="cart-totals__row"><dt>Subtotal <span class="cart-totals__count" data-cart-count-text></span></dt><dd class="t-price" data-cart-subtotal></dd></div>
+        </dl>
+        <p class="t-small text-muted">Delivery, if any, is added at checkout.</p>
+        <p class="cart-blocked" tabindex="-1" data-cart-blocked hidden></p>
+        <a class="button button--primary button--large button--block" href="checkout.html" data-cart-checkout>Review order</a>
+        <div class="cluster cluster--between">
+          <button class="button button--tertiary" type="button" data-overlay-close>Continue browsing</button>
+          <button class="button button--destructive" type="button" data-cart-clear>Empty cart</button>
+        </div>
+        <div class="cart-confirm" role="group" aria-labelledby="cart-clear-question" data-cart-clear-confirm hidden>
+          <p id="cart-clear-question" data-cart-clear-question></p>
+          <div class="cluster">
+            <button class="button button--secondary button--compact" type="button" data-cart-clear-no>Keep</button>
+            <button class="button button--primary button--compact" type="button" data-cart-clear-yes>Empty cart</button>
+          </div>
+        </div>
+      </div>
+      <div class="toast-region" data-toasts></div>
+    </div>
+  </dialog>
+  <template id="tpl-cart-line">
+    <li class="cart-line" data-cart-line>
+      <div class="cart-line__media" data-media></div>
+      <div class="cart-line__body">
+        <p class="cart-line__name"><span data-field="name"></span> <span class="cart-line__variant" data-field="variant"></span></p>
+        <p class="cart-line__note" data-field="note"></p>
+        <p class="cart-line__status" data-field="status"></p>
+        <div class="cart-line__controls">
+          <div class="stepper" role="group" aria-label="Quantity">
+            <button class="stepper__button" type="button" data-qty="dec" aria-label="Decrease quantity"></button>
+            <span class="stepper__value" data-field="qty"></span>
+            <button class="stepper__button" type="button" data-qty="inc" aria-label="Increase quantity"></button>
+          </div>
+          <p class="cart-line__total t-price" data-field="total"></p>
+        </div>
+        <button class="button button--destructive button--compact cart-line__remove" type="button" data-remove>Remove<span class="visually-hidden" data-field="remove-name"></span></button>
+      </div>
+    </li>
+  </template>
+  <aside class="cart-bar surface-dark" aria-label="Your order" data-cart-bar hidden>
+    <p class="cart-bar__summary"><span data-field="count"></span> · <span class="t-price" data-field="subtotal"></span></p>
+    <button class="button button--primary" type="button" data-cart-open>View cart</button>
+  </aside>
+  <div class="toast-region" data-toasts></div>
+  <!-- shared:cart:end -->
   <div class="visually-hidden" aria-live="polite" data-announcer></div>
 </body>
 </html>

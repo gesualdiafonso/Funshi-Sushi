@@ -1,10 +1,11 @@
 /**
  * Featured dishes on the home page, rendered from the menu data.
- * "Details" opens the dish on the menu page (menu.html?dish=<slug>).
+ * The title opens the dish on the menu page (menu.html?dish=<slug>);
+ * "Add" puts a simple dish in the order, "Choose" opens a dish with sizes.
  */
 
 import { featuredProducts } from '../core/catalog.js';
-import { t } from '../strings.js';
+import { addControl } from './add-to-cart.js';
 import { cloneTemplate, qs, qsa, setText } from './dom.js';
 import { dishImage } from './picture.js';
 import { piecesText, setPrice, tagBadges } from './product-info.js';
@@ -37,7 +38,7 @@ function card(product, catalog, config) {
   const titleId = `dish-${product.slug}`;
 
   setText(item, 'name', product.name);
-  item.querySelector('[data-field="name"]').id = titleId;
+  item.querySelector('.dish-card__title').id = titleId;
   article.setAttribute('aria-labelledby', titleId);
   setText(item, 'description', product.description);
   setText(item, 'pieces', piecesText(product));
@@ -47,8 +48,13 @@ function card(product, catalog, config) {
   const category = catalog.categoryById.get(product.categoryId)?.name ?? product.name;
   item.querySelector('[data-media]').append(dishImage(product, { sizes: CARD_SIZES, tileText: category }));
 
-  const link = item.querySelector('[data-field-link="menu"]');
-  link.href = `menu.html?dish=${encodeURIComponent(product.slug)}`;
-  setText(item, 'link-name', t('menu.viewOnMenuName', { name: product.name }));
+  // The title opens the dish's details on the menu page.
+  item.querySelector('[data-field-link="menu"]').href = `menu.html?dish=${encodeURIComponent(product.slug)}`;
+
+  // Add (simple dish) or Choose (sizes → its details on the menu page).
+  const control = addControl(product, { linkToMenu: true });
+  const action = item.querySelector('[data-action]');
+  if (control) action.append(control);
+  else action.remove();
   return item;
 }

@@ -55,3 +55,11 @@
     font-weight: 700;
   }
 }
+
+@layer components {
+  /* A notice that must not be missed (e.g. "Not confirmed yet"). */
+  .notice--strong {
+    border-inline-start: 4px solid var(--heading);
+    font-size: var(--text-body);
+  }
+}

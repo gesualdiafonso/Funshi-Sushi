@@ -20,6 +20,17 @@
 export const CONFIG = Object.freeze({
   brandName: 'Funshi Sushi', // {{BRAND_NAME}} — provisional until confirmed
 
+  /**
+   * Publishing (read by tools/build-seo.mjs, which writes canonical URLs, social
+   * tags, structured data, robots.txt and sitemap.xml — run it after editing).
+   */
+  site: Object.freeze({
+    url: null, // {{DOMAIN}} full address of the home page, e.g. 'https://example.com/' or 'https://user.github.io/Funshi-Sushi/'
+    // Keep false while the site shows sample content: pages ask search engines
+    // not to index them. Set true at launch, once the menu and facts are real.
+    allowIndexing: false,
+  }),
+
   locale: null, // {{LOCALE}} e.g. 'pt-BR' or 'es-AR'
   currency: null, // {{CURRENCY}} ISO 4217, e.g. 'BRL' or 'ARS'
   timeZone: null, // {{TIMEZONE}} IANA, e.g. 'America/Sao_Paulo'

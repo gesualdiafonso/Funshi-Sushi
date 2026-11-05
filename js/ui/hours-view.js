@@ -50,7 +50,7 @@ export function initHoursView(config, features) {
 }
 
 /** Localized weekday names, Monday first. */
-function weekdayNames(locale) {
+export function weekdayNames(locale) {
   const format = new Intl.DateTimeFormat(locale ?? 'en', { weekday: 'long', timeZone: 'UTC' });
   // 2024-01-01 was a Monday.
   return DAYS.map((_, index) => {

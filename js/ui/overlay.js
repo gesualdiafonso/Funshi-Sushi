@@ -32,6 +32,8 @@ import { delegate, on, qsa } from './dom.js';
 /** @type {null | (OverlayOptions & { el: HTMLElement, id: string, isDialog: boolean, pushed: boolean })} */
 let current = null;
 let ignoreNextPop = false;
+/** @type {null | HTMLElement} focus again once history.back() has finished (see popstate) */
+let focusAfterPop = null;
 /** @type {null | (() => void)} run once the history entry has been consumed */
 let afterPop = null;
 let installed = false;
@@ -124,6 +126,9 @@ export function closeOverlay(el, { fromHistory = false, keepHistory = false, aft
   if (!keepHistory && restoreFocus) {
     const target = closing.returnFocus?.isConnected ? closing.returnFocus : document.getElementById('main');
     target?.focus({ preventScroll: Boolean(closing.returnFocus?.isConnected) });
+    // Going back to an address with a #fragment (e.g. #main after the skip
+    // link) makes the browser move focus to that fragment: put it back after.
+    if (ignoreNextPop && !deferred) focusAfterPop = target;
   }
 
   closing.onClose?.();
@@ -140,8 +145,16 @@ export function installListeners() {
     if (ignoreNextPop) {
       ignoreNextPop = false;
       const run = afterPop;
+      const refocus = focusAfterPop;
       afterPop = null;
+      focusAfterPop = null;
       run?.();
+      // The browser focuses the #fragment after popstate handlers run: wait a tick.
+      if (refocus) {
+        setTimeout(() => {
+          if (refocus.isConnected && !current && document.activeElement !== refocus) refocus.focus({ preventScroll: true });
+        }, 0);
+      }
       return;
     }
     if (current && history.state?.overlay !== current.id) {

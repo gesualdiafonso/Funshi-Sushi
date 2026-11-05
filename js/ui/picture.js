@@ -42,6 +42,11 @@ export function dishImage(product, { sizes, eager = false, tileText = product.na
   img.height = 800;
   img.decoding = 'async';
   img.loading = eager ? 'eager' : 'lazy';
+  if (!eager) {
+    // Fades in once decoded instead of painting top to bottom (base.css).
+    img.dataset.loading = '';
+    img.addEventListener('load', () => img.removeAttribute('data-loading'), { once: true });
+  }
   img.addEventListener('error', () => picture.replaceWith(tile(tileText)), { once: true });
   picture.append(img);
   return picture;

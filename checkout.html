@@ -9,7 +9,10 @@
   <meta name="description" content="Review your Funshi Sushi order and send it by WhatsApp.">
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#240910">
+  <link rel="icon" href="favicon.ico" sizes="32x32">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
 
   <link rel="preload" href="assets/fonts/zen-kaku-gothic-new-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/shippori-mincho-b1-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -22,6 +25,13 @@
   <link rel="stylesheet" href="css/components/banner.css">
   <link rel="stylesheet" href="css/components/header.css">
   <link rel="stylesheet" href="css/components/footer.css">
+  <link rel="stylesheet" href="css/components/chip.css">
+  <link rel="stylesheet" href="css/components/form.css">
+  <link rel="stylesheet" href="css/components/cart.css">
+  <link rel="stylesheet" href="css/components/drawer.css">
+  <link rel="stylesheet" href="css/components/toast.css">
+  <link rel="stylesheet" href="css/components/checkout.css">
+  <link rel="stylesheet" href="css/components/skeleton.css">
   <link rel="stylesheet" href="css/utilities.css">
 
   <link rel="modulepreload" href="js/app.js">
@@ -30,6 +40,7 @@
   <link rel="modulepreload" href="js/core/features.js">
   <link rel="modulepreload" href="js/ui/dom.js">
   <link rel="modulepreload" href="js/ui/overlay.js">
+  <link rel="modulepreload" href="js/ui/focus-clear.js">
   <link rel="modulepreload" href="js/ui/header.js">
   <link rel="modulepreload" href="js/data/menu.js">
   <link rel="modulepreload" href="js/core/catalog.js">
@@ -37,10 +48,34 @@
   <link rel="modulepreload" href="js/core/hours.js">
   <link rel="modulepreload" href="js/ui/business-info.js">
   <link rel="modulepreload" href="js/ui/hours-view.js">
+  <link rel="modulepreload" href="js/services/storage.js">
+  <link rel="modulepreload" href="js/cart/cart-model.js">
+  <link rel="modulepreload" href="js/core/pricing.js">
+  <link rel="modulepreload" href="js/cart/cart-store.js">
+  <link rel="modulepreload" href="js/ui/announcer.js">
+  <link rel="modulepreload" href="js/ui/toast.js">
+  <link rel="modulepreload" href="js/ui/cart-messages.js">
+  <link rel="modulepreload" href="js/ui/picture.js">
+  <link rel="modulepreload" href="js/ui/product-info.js">
+  <link rel="modulepreload" href="js/ui/cart-view.js">
+  <link rel="modulepreload" href="js/ui/cart-drawer.js">
+  <link rel="modulepreload" href="js/ui/cart-indicators.js">
+  <link rel="modulepreload" href="js/ui/add-to-cart.js">
+  <link rel="modulepreload" href="js/core/validate.js">
+  <link rel="modulepreload" href="js/checkout/order.js">
+  <link rel="modulepreload" href="js/checkout/whatsapp.js">
+  <link rel="modulepreload" href="js/checkout/customer.js">
+  <link rel="modulepreload" href="js/ui/checkout-form.js">
+  <link rel="modulepreload" href="js/checkout/strings.js">
   <script type="module" src="js/pages/checkout.js"></script>
 </head>
 <body class="page surface-light">
   <a class="skip-link" href="#main">Skip to content</a>
+
+  <aside class="banner" aria-label="Preview notice" data-preview-notice>
+    <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#info"></use></svg>
+    <p>Preview: dishes, prices, the restaurant’s story and its contact details are placeholders until the restaurant confirms them.</p>
+  </aside>
 
   <aside class="banner" aria-label="Error" data-app-error hidden>
     <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#circle-alert"></use></svg>
@@ -50,19 +85,19 @@
   <!-- shared:header:start — keep identical on every page except aria-current -->
   <header class="site-header surface-dark" data-header>
     <div class="site-header__inner container">
-      <a class="wordmark" href="index.html" aria-label="Funshi Sushi, home">
+      <a class="wordmark" href="./" aria-label="Funshi Sushi, home">
         <span class="wordmark__name" aria-hidden="true">Funshi</span>
         <span class="wordmark__sub" aria-hidden="true">Sushi</span>
       </a>
       <nav class="site-nav" id="site-nav" aria-label="Main" data-nav>
         <ul class="site-nav__list" role="list">
           <li><a class="site-nav__link" href="menu.html">Menu</a></li>
-          <li><a class="site-nav__link" href="index.html#story">Our story</a></li>
-          <li><a class="site-nav__link" href="index.html#visit">Visit us</a></li>
+          <li><a class="site-nav__link" href="./#story">Our story</a></li>
+          <li><a class="site-nav__link" href="./#visit">Visit us</a></li>
         </ul>
         <div class="site-nav__extra">
           <p class="text-muted" data-business="address-inline"><span class="placeholder">Address to be confirmed</span></p>
-          <a class="button button--secondary" href="index.html#visit"><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#map-pin"></use></svg>Location and hours</a>
+          <a class="button button--secondary" href="./#visit"><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#map-pin"></use></svg>Location and hours</a>
         </div>
       </nav>
       <div class="site-header__actions">
@@ -81,11 +116,195 @@
   <!-- shared:header:end -->
 
   <main id="main" tabindex="-1" data-inert-on-overlay>
-    <section class="section">
+    <section class="checkout section section--tight" aria-labelledby="checkout-title">
       <div class="container">
-        <div class="stack stack--5">
-          <h1>Checkout</h1>
-          <p class="t-lead text-muted">This page is being built. Its content arrives in a later phase.</p>
+        <div class="stack stack--7">
+          <div class="stack stack--3">
+            <h1 id="checkout-title">Checkout</h1>
+            <p class="t-lead text-muted">Review your order, add your details, and send it to the restaurant by WhatsApp. The restaurant replies to confirm it.</p>
+          </div>
+          <noscript><p class="notice">Ordering online needs JavaScript. Turn it on to see your order.</p></noscript>
+
+          <div class="skeleton checkout-skeleton" data-skeleton>
+            <p class="skeleton__slow" role="status">Your order is taking longer than usual to load. Check your connection and reload the page.</p>
+            <p class="visually-hidden">Loading your order…</p>
+            <div class="checkout-skeleton__layout" aria-hidden="true">
+              <div class="stack stack--5">
+                <span class="skeleton__shape skeleton__shape--title"></span>
+                <div>
+                <div class="skeleton__line"><span class="skeleton__shape skeleton__shape--image"></span><span class="skeleton__text"><span class="skeleton__shape skeleton__w-60"></span><span class="skeleton__shape skeleton__w-80"></span></span></div>
+                <div class="skeleton__line"><span class="skeleton__shape skeleton__shape--image"></span><span class="skeleton__text"><span class="skeleton__shape skeleton__w-45"></span><span class="skeleton__shape skeleton__w-80"></span></span></div>
+                </div>
+              </div>
+              <span class="skeleton__shape skeleton__shape--block"></span>
+            </div>
+          </div>
+
+          <form class="checkout__grid" id="checkout-form" novalidate data-checkout-order data-checkout-form hidden>
+            <div class="checkout__main">
+              <section class="checkout__order" aria-labelledby="order-title">
+                <div class="checkout__head">
+                  <h2 id="order-title" tabindex="-1" data-cart-focus>Your order</h2>
+                  <a class="button button--tertiary" href="menu.html">Add more dishes</a>
+                </div>
+                <ul class="cart-lines" role="list" data-cart-lines></ul>
+                <div class="cart-empty" data-cart-empty hidden>
+                  <svg class="icon empty-icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#shopping-bag"></use></svg>
+                  <p class="cart-empty__title">There’s nothing to check out yet.</p>
+                  <p>Your order is empty. Add dishes from the menu and they’ll appear here.</p>
+                  <a class="button button--primary" href="menu.html">See the menu</a>
+                </div>
+              </section>
+
+              <div class="checkout__details" data-checkout-details>
+                <div class="error-summary" role="alert" tabindex="-1" aria-labelledby="error-summary-title" data-error-summary hidden>
+                  <h2 class="error-summary__title" id="error-summary-title" data-error-summary-title>There’s a problem</h2>
+                  <ul class="error-summary__list" data-error-list></ul>
+                </div>
+
+                <fieldset class="checkout__fieldset" data-fieldset="fulfilment">
+                  <legend class="checkout__legend">Delivery or pickup</legend>
+                  <div class="choice-cards" data-fulfilment-options></div>
+                  <p class="field__error" id="err-fulfilment" data-error-for="fulfilment" hidden><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#circle-alert"></use></svg><span></span></p>
+                  <p class="t-small text-muted" data-pickup-info hidden></p>
+                </fieldset>
+
+                <fieldset class="checkout__fieldset" data-fieldset="details">
+                  <legend class="checkout__legend">Your details</legend>
+                <div class="field" data-field-wrap="name">
+                  <label class="field__label" for="name">Name</label>
+                  <input class="field__input" id="name" name="name" type="text" autocomplete="name" maxlength="60" required aria-describedby="err-name">
+                  <p class="field__error" id="err-name" data-error-for="name" hidden><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#circle-alert"></use></svg><span></span></p>
+                </div>
+                <div class="field" data-field-wrap="phone">
+                  <label class="field__label" for="phone">Phone (WhatsApp)</label>
+                  <input class="field__input" id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="30" required aria-describedby="hint-phone err-phone">
+                  <p class="field__hint" id="hint-phone">With area code. The restaurant uses it to confirm your order.</p>
+                  <p class="field__error" id="err-phone" data-error-for="phone" hidden><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#circle-alert"></use></svg><span></span></p>
+                </div>
+                </fieldset>
+
+                <fieldset class="checkout__fieldset" data-fieldset="address" hidden>
+                  <legend class="checkout__legend">Delivery address</legend>
+                  <p class="t-small text-muted" data-delivery-area hidden></p>
+                <div class="field" data-field-wrap="street">
+                  <label class="field__label" for="street">Street and number</label>
+                  <input class="field__input" id="street" name="street" type="text" autocomplete="address-line1" maxlength="100" aria-describedby="err-street">
+                  <p class="field__error" id="err-street" data-error-for="street" hidden><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#circle-alert"></use></svg><span></span></p>
+                </div>
+                  <label class="checkbox"><input type="checkbox" name="noStreetNumber" data-no-number> <span>No street number</span></label>
+                <div class="field" data-field-wrap="apartment">
+                  <label class="field__label" for="apartment">Apartment, floor <span class="field__optional">(optional)</span></label>
+                  <input class="field__input" id="apartment" name="apartment" type="text" autocomplete="address-line2" maxlength="40" aria-describedby="err-apartment">
+                  <p class="field__error" id="err-apartment" data-error-for="apartment" hidden><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#circle-alert"></use></svg><span></span></p>
+                </div>
+                  <div class="field" data-field-wrap="area">
+                    <label class="field__label" for="area" data-area-label>Neighbourhood</label>
+                    <input class="field__input" id="area" name="area" type="text" autocomplete="address-level3" maxlength="60" aria-describedby="err-area" data-area-text>
+                    <select class="field__input" id="area-zone" name="area" aria-describedby="err-area" data-area-zone hidden disabled></select>
+                    <p class="field__error" id="err-area" data-error-for="area" hidden><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#circle-alert"></use></svg><span></span></p>
+                  </div>
+                <div class="field" data-field-wrap="reference">
+                  <label class="field__label" for="reference">Reference point <span class="field__optional">(optional)</span></label>
+                  <input class="field__input" id="reference" name="reference" type="text" maxlength="100" aria-describedby="hint-reference err-reference">
+                  <p class="field__hint" id="hint-reference">For example: blue gate, next to the pharmacy.</p>
+                  <p class="field__error" id="err-reference" data-error-for="reference" hidden><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#circle-alert"></use></svg><span></span></p>
+                </div>
+                </fieldset>
+
+                <fieldset class="checkout__fieldset" data-fieldset="payment" hidden>
+                  <legend class="checkout__legend">Payment</legend>
+                  <p class="t-small text-muted">You pay when the order is delivered or picked up. Nothing is charged on this site.</p>
+                  <div class="choice-list" data-payment-options></div>
+                  <p class="field__error" id="err-payment" data-error-for="payment" hidden><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#circle-alert"></use></svg><span></span></p>
+                  <div data-change-wrap hidden>
+                <div class="field" data-field-wrap="changeFor">
+                  <label class="field__label" for="changeFor">Change for <span class="field__optional">(optional)</span></label>
+                  <input class="field__input" id="changeFor" name="changeFor" type="text" inputmode="decimal" autocomplete="off" maxlength="10" aria-describedby="hint-changeFor err-changeFor">
+                  <p class="field__hint" id="hint-changeFor">If you’ll pay cash and need change, the note you’ll pay with.</p>
+                  <p class="field__error" id="err-changeFor" data-error-for="changeFor" hidden><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#circle-alert"></use></svg><span></span></p>
+                </div>
+                  </div>
+                </fieldset>
+
+                <fieldset class="checkout__fieldset">
+                  <legend class="checkout__legend">Notes</legend>
+                  <div class="field" data-cart-note-field>
+                    <label class="field__label" for="cart-note">Note for the restaurant <span class="field__optional">(optional)</span></label>
+                    <textarea class="field__input" id="cart-note" rows="3" aria-describedby="cart-note-count" data-cart-note></textarea>
+                    <p class="field__hint" id="cart-note-count" data-cart-note-count hidden></p>
+                  </div>
+                  <div class="stack stack--2">
+                    <label class="checkbox"><input type="checkbox" name="remember" data-remember> <span>Remember my details on this device</span></label>
+                    <p class="t-small text-muted">Saved only in this browser, for your next order. <button class="button button--tertiary button--inline" type="button" data-forget hidden>Forget my details</button></p>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+
+            <aside class="checkout__summary" aria-labelledby="summary-title" data-cart-summary>
+              <h2 class="checkout__summary-title" id="summary-title">Summary</h2>
+              <dl class="cart-totals">
+                <div class="cart-totals__row cart-totals__row--minor"><dt>Subtotal <span class="cart-totals__count" data-cart-count-text></span></dt><dd class="t-price" data-cart-subtotal></dd></div>
+                <div class="cart-totals__row cart-totals__row--minor" data-total-delivery-row hidden><dt>Delivery</dt><dd class="t-price" data-total-delivery></dd></div>
+                <div class="cart-totals__row"><dt>Total</dt><dd class="t-price" data-total></dd></div>
+              </dl>
+              <p class="checkout__alert" tabindex="-1" data-min-order hidden></p>
+              <p class="cart-blocked" tabindex="-1" data-cart-blocked hidden></p>
+              <p class="checkout__alert" tabindex="-1" data-hours-alert hidden></p>
+              <p class="notice" tabindex="-1" data-ordering-off hidden><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#info"></use></svg><span data-ordering-off-text></span></p>
+              <div class="cart-confirm" data-closed-confirm hidden>
+                <p data-closed-confirm-text></p>
+                <button class="button button--primary button--compact" type="button" data-send-anyway>Send anyway</button>
+              </div>
+              <button class="button button--primary button--large button--block" type="submit" data-send><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#message-circle"></use></svg>Send order via WhatsApp</button>
+              <p class="t-small text-muted">WhatsApp opens with your order written out. Send it there; your order is confirmed only when the restaurant replies.</p>
+              <p class="t-caption">Your details are used only in the WhatsApp message you send. This site doesn’t send them anywhere else.</p>
+            </aside>
+          </form>
+
+          <section class="sent" aria-labelledby="sent-title" data-sent hidden>
+            <div class="stack stack--5">
+              <div class="stack stack--2">
+                <h2 class="sent__title" id="sent-title" tabindex="-1">Your order is ready to send</h2>
+                <p>Reference <strong class="sent__ref" data-sent-ref></strong></p>
+              </div>
+              <p class="notice notice--strong"><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#info"></use></svg><span><strong>Not confirmed yet.</strong> Your order is confirmed only when the restaurant replies to your WhatsApp message.</span></p>
+              <ol class="sent__steps">
+                <li>WhatsApp should now be open with your order written out.</li>
+                <li>Check it, then tap <strong>Send</strong> in WhatsApp.</li>
+                <li>Wait for the restaurant’s reply confirming your order and the timing.</li>
+              </ol>
+              <p class="notice" data-sent-demo hidden><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#info"></use></svg>This was a test order from the sample menu, and the message says so.</p>
+              <p class="notice" data-sent-long hidden><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#circle-alert"></use></svg><span data-sent-long-text></span></p>
+              <div class="stack stack--3">
+                <p class="t-label">WhatsApp didn’t open?</p>
+                <div class="cluster">
+                  <a class="button button--primary" data-sent-open>Open WhatsApp again<span class="visually-hidden"> (opens in a new tab)</span></a>
+                  <button class="button button--secondary" type="button" data-sent-copy>Copy order text</button>
+                </div>
+                <p class="t-small" role="status" data-copy-status></p>
+                <label class="visually-hidden" for="copy-fallback">Order text</label>
+                <textarea class="field__input sent__fallback" id="copy-fallback" rows="8" readonly data-copy-fallback hidden></textarea>
+              </div>
+              <details class="sent__message">
+                <summary>See the message</summary>
+                <pre class="sent__pre" data-sent-message></pre>
+              </details>
+              <div class="cluster">
+                <button class="button button--secondary" type="button" data-sent-edit>Edit order</button>
+                <a class="button button--tertiary" href="menu.html">Back to the menu</a>
+                <button class="button button--tertiary" type="button" data-sent-new>Start a new order</button>
+              </div>
+              <div class="cart-confirm" role="group" aria-labelledby="new-order-question" data-new-confirm hidden>
+                <p id="new-order-question" data-new-question></p>
+                <div class="cluster">
+                  <button class="button button--secondary button--compact" type="button" data-new-no>Keep this order</button>
+                  <button class="button button--primary button--compact" type="button" data-new-yes>Start again</button>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     </section>
@@ -96,7 +315,7 @@
     <div class="container">
       <div class="site-footer__columns">
         <div class="stack stack--3">
-          <a class="wordmark" href="index.html" aria-label="Funshi Sushi, home">
+          <a class="wordmark" href="./" aria-label="Funshi Sushi, home">
             <span class="wordmark__name" aria-hidden="true">Funshi</span>
             <span class="wordmark__sub" aria-hidden="true">Sushi</span>
           </a>
@@ -107,7 +326,7 @@
           <div class="stack stack--2">
             <p data-business="address-inline"><span class="placeholder">Address to be confirmed</span></p>
             <p data-hours-summary><span class="placeholder">Opening hours to be confirmed</span></p>
-            <p><a href="index.html#visit">Location and hours</a></p>
+            <p><a href="./#visit">Location and hours</a></p>
           </div>
         </div>
         <div>
@@ -126,6 +345,26 @@
   </footer>
   <!-- shared:footer:end -->
 
+  <template id="tpl-cart-line">
+    <li class="cart-line" data-cart-line>
+      <div class="cart-line__media" data-media></div>
+      <div class="cart-line__body">
+        <p class="cart-line__name"><span data-field="name"></span> <span class="cart-line__variant" data-field="variant"></span></p>
+        <p class="cart-line__note" data-field="note"></p>
+        <p class="cart-line__status" data-field="status"></p>
+        <div class="cart-line__controls">
+          <div class="stepper" role="group" aria-label="Quantity">
+            <button class="stepper__button" type="button" data-qty="dec" aria-label="Decrease quantity"></button>
+            <span class="stepper__value" data-field="qty"></span>
+            <button class="stepper__button" type="button" data-qty="inc" aria-label="Increase quantity"></button>
+          </div>
+          <p class="cart-line__total t-price" data-field="total"></p>
+        </div>
+        <button class="button button--destructive button--compact cart-line__remove" type="button" data-remove>Remove<span class="visually-hidden" data-field="remove-name"></span></button>
+      </div>
+    </li>
+  </template>
+  <div class="toast-region" data-toasts></div>
   <div class="visually-hidden" aria-live="polite" data-announcer></div>
 </body>
 </html>

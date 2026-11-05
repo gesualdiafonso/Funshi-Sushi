@@ -4,6 +4,7 @@
  * images are never reloaded.
  */
 
+import { addControl } from './add-to-cart.js';
 import { cloneTemplate, setText } from './dom.js';
 import { dishImage } from './picture.js';
 import { piecesText, setPrice, tagBadges, unavailableBadge } from './product-info.js';
@@ -63,5 +64,10 @@ function menuItem(product, catalog, config) {
 
   item.querySelector('[data-media]').append(dishImage(product, { sizes: THUMB_SIZES }));
   item.querySelector('[data-open-dish]').dataset.openDish = product.slug;
+
+  const control = addControl(product);
+  const action = item.querySelector('[data-action]');
+  if (control) action.append(control);
+  else action.remove();
   return item;
 }

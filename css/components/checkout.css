@@ -1,0 +1,173 @@
+/* ==========================================================================
+   Checkout — order review (phase 08). The form arrives in the checkout phase.
+   ========================================================================== */
+
+@layer components {
+  .checkout__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-7);
+  }
+
+  @media (min-width: 64rem) {
+    .checkout__grid {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+      gap: var(--space-8);
+      align-items: start;
+    }
+  }
+
+  .checkout__order {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .checkout__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-5);
+    padding-block-end: var(--space-3);
+    border-block-end: var(--border-width-strong) solid var(--heading);
+  }
+
+  .checkout .cart-line {
+    grid-template-columns: 5rem minmax(0, 1fr);
+  }
+
+  .checkout__summary {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    border-radius: var(--radius-cut);
+    background-color: var(--surface-inset);
+  }
+
+  @media (min-width: 64rem) {
+    .checkout__summary {
+      position: sticky;
+      inset-block-start: calc(var(--header-height) + var(--space-5));
+    }
+  }
+
+  .checkout__summary .notice {
+    padding: 0;
+    background: none;
+  }
+}
+
+/* ---- Form (phase 09) ---------------------------------------------------------- */
+@layer components {
+  .checkout__main,
+  .checkout__details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-7);
+    min-width: 0;
+  }
+
+  .checkout__fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .checkout__legend {
+    margin-block-end: var(--space-4);
+    padding: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--heading);
+  }
+
+  .checkout__fieldset .field {
+    max-width: 32rem;
+  }
+
+  .checkout__summary-title {
+    font-size: var(--text-h3);
+  }
+
+  .cart-totals {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .cart-totals__row--minor {
+    font-size: var(--text-body);
+    font-weight: 400;
+  }
+
+  .checkout__alert {
+    color: var(--error);
+    font-size: var(--text-small);
+    font-weight: 500;
+  }
+
+  .checkout__summary .notice[data-ordering-off] {
+    padding: var(--space-3) var(--space-4);
+    background-color: var(--color-shari);
+  }
+
+  /* ---- After sending ----------------------------------------------------------- */
+  .sent {
+    max-width: 42rem;
+  }
+
+  .sent__title {
+    font-size: var(--text-h1);
+  }
+
+  .sent__ref {
+    font-family: var(--font-body);
+    letter-spacing: 0.04em;
+  }
+
+  .sent__steps {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin: 0;
+    padding-inline-start: var(--space-6);
+  }
+
+  .sent__steps li::marker {
+    color: var(--heading);
+    font-weight: 700;
+  }
+
+  .sent__message summary {
+    min-height: var(--tap-target);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: var(--link);
+    font-weight: 500;
+  }
+
+  .sent__pre {
+    margin-block-start: var(--space-2);
+    padding: var(--space-4);
+    border-radius: var(--radius-cut);
+    background-color: var(--surface-inset);
+    font-family: var(--font-body);
+    font-size: var(--text-small);
+    line-height: 1.6;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  .sent__fallback {
+    font-size: var(--text-small);
+  }
+}

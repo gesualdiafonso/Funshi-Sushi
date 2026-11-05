@@ -1,0 +1,120 @@
+/* ==========================================================================
+   Drawer — cart panel (native <dialog>, opened by js/ui/overlay.js).
+   Full screen on phones; a 28rem panel on the right from 40rem.
+   ========================================================================== */
+
+@layer components {
+  /* Viewport units: the page reserves a scrollbar gutter (base.css), which a
+     full-screen panel should cover. */
+  .drawer {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0 0 0 auto;
+    background: transparent;
+    overflow: visible;
+  }
+
+  .drawer::backdrop {
+    background-color: var(--backdrop);
+  }
+
+  .drawer__panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: var(--surface);
+    color: var(--text);
+    box-shadow: var(--shadow-overlay);
+  }
+
+  .drawer[open] .drawer__panel {
+    animation: drawer-in var(--dur-base) var(--ease-out);
+  }
+
+  .drawer[open]::backdrop {
+    animation: drawer-fade var(--dur-base) var(--ease-out);
+  }
+
+  @media (min-width: 40rem) {
+    .drawer {
+      width: min(28rem, 100vw);
+    }
+  }
+
+  .drawer__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-3) var(--space-3) var(--space-5);
+    border-block-end: var(--border-width) solid var(--line);
+  }
+
+  .drawer__title {
+    font-size: var(--text-h3);
+  }
+
+  .drawer__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: var(--space-2) var(--space-5) var(--space-5);
+  }
+
+  .drawer__body:focus-visible {
+    outline-offset: -3px;
+  }
+
+  .drawer__footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5) calc(var(--space-4) + env(safe-area-inset-bottom));
+    border-block-start: var(--border-width) solid var(--line);
+  }
+
+  /* Exit: mirror of the entry, faster (see dialog.css). */
+  @media (prefers-reduced-motion: no-preference) {
+    .drawer,
+    .drawer::backdrop {
+      transition:
+        display var(--dur-fast) allow-discrete,
+        overlay var(--dur-fast) allow-discrete,
+        opacity var(--dur-fast) var(--ease-in);
+    }
+
+    .drawer__panel {
+      transition: translate var(--dur-fast) var(--ease-in);
+    }
+
+    .drawer:not([open]) {
+      pointer-events: none;
+    }
+
+    .drawer:not([open])::backdrop {
+      opacity: 0;
+    }
+
+    .drawer:not([open]) .drawer__panel {
+      translate: 100% 0;
+    }
+  }
+
+  @keyframes drawer-in {
+    from {
+      translate: 100% 0;
+    }
+  }
+
+  @keyframes drawer-fade {
+    from {
+      opacity: 0;
+    }
+  }
+}

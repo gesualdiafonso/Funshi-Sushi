@@ -41,13 +41,15 @@ test('an invalid WhatsApp number never enables ordering', () => {
   }
 });
 
-test('ordering needs at least one fulfilment mode and one payment method', () => {
+test('ordering needs a valid WhatsApp number and at least one fulfilment mode (payments optional)', () => {
   const noModes = {
     ...complete,
     fulfilment: { delivery: { enabled: false }, pickup: { enabled: false } },
   };
   assert.equal(deriveFeatures(noModes).canOrder, false);
-  assert.equal(deriveFeatures({ ...complete, payments: [] }).canOrder, false);
+  assert.equal(deriveFeatures({ ...complete, payments: null }).canOrder, true);
+  assert.equal(deriveFeatures({ ...complete, payments: null }).hasPayments, false);
+  assert.equal(deriveFeatures({ ...complete, whatsappNumber: null }).canOrder, false);
 });
 
 test('open status needs both hours and time zone', () => {

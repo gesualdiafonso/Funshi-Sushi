@@ -11,7 +11,8 @@ const WHATSAPP_DIGITS = /^\d{8,15}$/;
 
 /**
  * @typedef {Object} Features
- * @property {boolean} canOrder        WhatsApp ordering can be offered
+ * @property {boolean} canOrder        WhatsApp ordering can be offered (number + a fulfilment mode)
+ * @property {boolean} hasPayments     Payment methods configured (else "to be agreed")
  * @property {boolean} canFormatMoney  Locale + currency known
  * @property {boolean} showOpenStatus  Hours + time zone known
  * @property {boolean} showAddress
@@ -54,7 +55,10 @@ export function deriveFeatures(config) {
   const canFormatMoney = hasLocale && hasCurrency;
 
   return {
-    canOrder: hasWhatsapp && canFormatMoney && hasPayments && (delivery || pickup),
+    // Sending needs only a real destination and a way to receive the food.
+    // Unknown currency → neutral prices; unknown payment methods → "to be agreed".
+    canOrder: hasWhatsapp && (delivery || pickup),
+    hasPayments,
     canFormatMoney,
     showOpenStatus: hasHours && hasTimeZone,
     showAddress: hasAddress,
